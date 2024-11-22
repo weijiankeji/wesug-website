@@ -9,15 +9,16 @@ import {
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { LogIn, LogOut, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { LoginDialog } from './LoginDialog';
 
 // Mock user state (replace with real authentication later)
 const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [user, setUser] = React.useState<{ name: string } | null>(null);
+  const [user, setUser] = React.useState<{ name: string; phone: string } | null>(null);
 
-  const login = () => {
+  const login = (phone: string) => {
     setIsLoggedIn(true);
-    setUser({ name: 'Demo User' });
+    setUser({ name: `User ${phone.slice(-4)}`, phone });
   };
 
   const logout = () => {
@@ -31,18 +32,26 @@ const useAuth = () => {
 export const UserMenu = () => {
   const { t } = useTranslation();
   const { isLoggedIn, user, login, logout } = useAuth();
+  const [showLoginDialog, setShowLoginDialog] = React.useState(false);
 
   if (!isLoggedIn) {
     return (
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={login}
-        className="flex items-center gap-2"
-      >
-        <LogIn className="h-4 w-4" />
-        {t('login')}
-      </Button>
+      <>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setShowLoginDialog(true)}
+          className="flex items-center gap-2"
+        >
+          <LogIn className="h-4 w-4" />
+          {t('login')}
+        </Button>
+        <LoginDialog
+          open={showLoginDialog}
+          onOpenChange={setShowLoginDialog}
+          onLogin={login}
+        />
+      </>
     );
   }
 
