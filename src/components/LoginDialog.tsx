@@ -11,13 +11,15 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from './ui/form';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 
 const formSchema = z.object({
   phone: z.string().min(11).max(11),
   otp: z.string().length(6),
   agreement: z.boolean().refine((val) => val === true, {
     message: "You must agree to the terms and privacy policy"
-  })
+  }),
+  name: z.string().min(2).optional()
 });
 
 interface LoginDialogProps {
@@ -31,13 +33,15 @@ export const LoginDialog = ({ open, onOpenChange, onLogin }: LoginDialogProps) =
   const { toast } = useToast();
   const [step, setStep] = React.useState<'phone' | 'otp'>('phone');
   const [countdown, setCountdown] = React.useState(0);
+  const [mode, setMode] = React.useState<'signin' | 'signup'>('signin');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       phone: '',
       otp: '',
-      agreement: false
+      agreement: false,
+      name: ''
     }
   });
 
@@ -83,16 +87,42 @@ export const LoginDialog = ({ open, onOpenChange, onLogin }: LoginDialogProps) =
     }
   };
 
+  const handleModeChange = (newMode: string) => {
+    setMode(newMode as 'signin' | 'signup');
+    form.reset();
+    setStep('phone');
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{t('login')}</DialogTitle>
+          <Tabs defaultValue="signin" onValueChange={handleModeChange}>
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="signin">{t('signIn')}</TabsTrigger>
+              <TabsTrigger value="signup">{t('signUp')}</TabsTrigger>
+            </TabsList>
+          </Tabs>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             {step === 'phone' ? (
               <>
+                {mode === 'signup' && (
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <Label>{t('name')}</Label>
+                        <FormControl>
+                          <Input placeholder={t('enterName')} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
                 <FormField
                   control={form.control}
                   name="phone"

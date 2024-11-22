@@ -56,6 +56,10 @@ i18n.use(initReactI18next).init({
         terms: 'Terms of Service',
         and: 'and',
         privacy: 'Privacy Policy',
+        signIn: 'Sign In',
+        signUp: 'Sign Up',
+        name: 'Name',
+        enterName: 'Enter your name',
       }
     },
     zh: {
@@ -109,6 +113,10 @@ i18n.use(initReactI18next).init({
         terms: '用户协议',
         and: '和',
         privacy: '隐私政策',
+        signIn: '登录',
+        signUp: '注册',
+        name: '姓名',
+        enterName: '请输入姓名',
       }
     }
   },
