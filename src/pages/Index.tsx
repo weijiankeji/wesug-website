@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { LanguageSwitch } from "@/components/LanguageSwitch";
 import DownloadSection from "@/components/DownloadSection";
 import Logo from "@/components/Logo";
+import { UserMenu } from "@/components/UserMenu";
 
 const Index = () => {
   const { t } = useTranslation();
@@ -61,7 +62,10 @@ const Index = () => {
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <Logo />
-          <LanguageSwitch />
+          <div className="flex items-center gap-4">
+            <LanguageSwitch />
+            <UserMenu />
+          </div>
         </div>
       </header>
       

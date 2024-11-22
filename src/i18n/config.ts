@@ -41,7 +41,9 @@ i18n.use(initReactI18next).init({
         desktopClient: 'Desktop Client',
         clientDescription: 'Get more features and better performance with our desktop application',
         download: 'Download',
-        systemRequirements: 'System Requirements: Windows 10/11, macOS 10.15+'
+        systemRequirements: 'System Requirements: Windows 10/11, macOS 10.15+',
+        login: 'Login',
+        logout: 'Logout',
       }
     },
     zh: {
@@ -80,7 +82,9 @@ i18n.use(initReactI18next).init({
         desktopClient: '桌面客户端',
         clientDescription: '使用我们的桌面应用程序获得更多功能和更好的性能',
         download: '下载',
-        systemRequirements: '系统要求：Windows 10/11、macOS 10.15+'
+        systemRequirements: '系统要求：Windows 10/11、macOS 10.15+',
+        login: '登录',
+        logout: '退出登录',
       }
     }
   },
