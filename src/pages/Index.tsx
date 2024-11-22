@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitch } from "@/components/LanguageSwitch";
 import DownloadSection from "@/components/DownloadSection";
+import Logo from "@/components/Logo";
 
 const Index = () => {
   const { t } = useTranslation();
@@ -57,15 +58,23 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      <LanguageSwitch />
+      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b">
+        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+          <Logo />
+          <LanguageSwitch />
+        </div>
+      </header>
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary to-secondary py-20 text-white">
+      <section className="relative bg-gradient-to-r from-primary to-secondary pt-32 pb-20 text-white">
         <div className="container mx-auto px-6 animate-fadeIn">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">{t('heroTitle')}</h1>
-            <p className="text-xl md:text-2xl mb-8">
+            <p className="text-xl md:text-2xl mb-4">
               {t('heroDescription')}
+            </p>
+            <p className="text-lg mb-8 opacity-90">
+              {t('bannerText')}
             </p>
             <Button
               size="lg"
