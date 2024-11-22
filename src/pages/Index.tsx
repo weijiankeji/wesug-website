@@ -62,9 +62,9 @@ const Index = () => {
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <Logo />
-          <div className="flex items-center space-x-2">  {/* Changed from space-x-3 to space-x-2 */}
+          <div className="flex items-center space-x-2">
             <LanguageSwitch />
-            <div className="h-6 w-px bg-gray-200" /> {/* 分隔线 */}
+            <div className="h-6 w-px bg-gray-200" />
             <UserMenu />
           </div>
         </div>
@@ -74,11 +74,7 @@ const Index = () => {
       <section className="relative bg-gradient-to-r from-primary to-secondary pt-32 pb-20 text-white">
         <div className="container mx-auto px-6 animate-fadeIn">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">{t('heroTitle')}</h1>
-            <p className="text-xl md:text-2xl mb-4">
-              {t('heroDescription')}
-            </p>
-            <p className="text-lg mb-8 opacity-90">
+            <p className="text-xl md:text-2xl mb-8">
               {t('bannerText')}
             </p>
             <Button
