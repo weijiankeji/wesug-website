@@ -62,6 +62,8 @@ i18n.use(initReactI18next).init({
         enterName: 'Enter your name',
         password: 'Password',
         confirmPassword: 'Confirm Password',
+        passwordLogin: 'Password Login',
+        otpLogin: 'SMS Code Login',
       }
     },
     zh: {
@@ -121,6 +123,8 @@ i18n.use(initReactI18next).init({
         enterName: '请输入姓名',
         password: '密码',
         confirmPassword: '确认密码',
+        passwordLogin: '密码登录',
+        otpLogin: '验证码登录',
       }
     }
   },
