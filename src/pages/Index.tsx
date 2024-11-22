@@ -16,6 +16,10 @@ const Index = () => {
     servicesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleDocumentProcessingClick = () => {
+    window.location.href = 'https://pdf.wesug.cn';
+  };
+
   const services = [
     {
       icon: <File className="w-8 h-8" />,
@@ -25,7 +29,8 @@ const Index = () => {
         t('pdfPreview'),
         t('pdfMerge'),
         t('pdfSplit'),
-      ]
+      ],
+      onClick: handleDocumentProcessingClick
     },
     {
       icon: <Image className="w-8 h-8" />,
@@ -65,7 +70,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Header Section */}
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <Logo />
@@ -77,7 +81,6 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary to-secondary pt-32 pb-20 text-white">
         <div className="container mx-auto px-6 animate-fadeIn">
           <div className="max-w-3xl mx-auto text-center">
@@ -101,7 +104,11 @@ const Index = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">{t('ourServices')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
+              <Card 
+                key={index} 
+                className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
+                onClick={service.onClick}
+              >
                 <div className="text-primary mb-4">{service.icon}</div>
                 <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
                 <p className="text-gray-600 mb-4">{service.description}</p>
@@ -116,7 +123,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="py-20">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">{t('keyFeatures')}</h2>
@@ -132,10 +138,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Download Section */}
       <DownloadSection />
 
-      {/* CTA Section */}
       <section className="bg-primary py-20 text-white">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('readyToStart')}</h2>
@@ -150,7 +154,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-gray-900 text-gray-300 py-12">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 gap-8">
