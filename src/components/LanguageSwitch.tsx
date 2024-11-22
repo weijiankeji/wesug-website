@@ -22,7 +22,6 @@ export const LanguageSwitch = () => {
       variant="ghost"
       size="icon"
       onClick={toggleLanguage}
-      className="fixed top-4 right-4 z-50"
     >
       <Languages className="h-5 w-5" />
     </Button>

@@ -62,13 +62,14 @@ const Index = () => {
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <Logo />
-          <div className="flex items-center gap-4">
+          <div className="flex items-center space-x-4">
             <LanguageSwitch />
+            <div className="h-6 w-px bg-gray-200" /> {/* 分隔线 */}
             <UserMenu />
           </div>
         </div>
       </header>
-      
+
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary to-secondary pt-32 pb-20 text-white">
         <div className="container mx-auto px-6 animate-fadeIn">
