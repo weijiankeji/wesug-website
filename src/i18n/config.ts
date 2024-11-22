@@ -60,6 +60,8 @@ i18n.use(initReactI18next).init({
         signUp: 'Sign Up',
         name: 'Name',
         enterName: 'Enter your name',
+        password: 'Password',
+        confirmPassword: 'Confirm Password',
       }
     },
     zh: {
@@ -117,6 +119,8 @@ i18n.use(initReactI18next).init({
         signUp: '注册',
         name: '姓名',
         enterName: '请输入姓名',
+        password: '密码',
+        confirmPassword: '确认密码',
       }
     }
   },
