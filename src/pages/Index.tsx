@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitch } from "@/components/LanguageSwitch";
+import DownloadSection from "@/components/DownloadSection";
 
 const Index = () => {
   const { t } = useTranslation();
@@ -12,16 +13,27 @@ const Index = () => {
       icon: <File className="w-8 h-8" />,
       title: t('documentProcessing'),
       description: t('documentDescription'),
+      features: [
+        t('pdfPreview'),
+        t('pdfMerge'),
+        t('pdfSplit'),
+      ]
     },
     {
       icon: <Image className="w-8 h-8" />,
       title: t('imageProcessing'),
       description: t('imageDescription'),
+      features: [
+        t('imageCompression'),
+      ]
     },
     {
       icon: <RefreshCw className="w-8 h-8" />,
       title: t('formatConversion'),
       description: t('formatDescription'),
+      features: [
+        t('comingSoon'),
+      ]
     },
   ];
 
@@ -74,7 +86,12 @@ const Index = () => {
               <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
                 <div className="text-primary mb-4">{service.icon}</div>
                 <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                <p className="text-gray-600">{service.description}</p>
+                <p className="text-gray-600 mb-4">{service.description}</p>
+                <ul className="list-disc list-inside text-sm text-gray-500">
+                  {service.features.map((feature, idx) => (
+                    <li key={idx} className="mb-1">{feature}</li>
+                  ))}
+                </ul>
               </Card>
             ))}
           </div>
@@ -96,6 +113,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Download Section */}
+      <DownloadSection />
 
       {/* CTA Section */}
       <section className="bg-primary py-20 text-white">
