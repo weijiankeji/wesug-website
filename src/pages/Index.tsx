@@ -74,7 +74,7 @@ const Index = () => {
       <section className="relative bg-gradient-to-r from-primary to-secondary pt-32 pb-20 text-white">
         <div className="container mx-auto px-6 animate-fadeIn">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-xl md:text-2xl mb-8">
+            <p className="text-2xl md:text-3xl mb-8 font-bold">
               {t('bannerText')}
             </p>
             <Button
