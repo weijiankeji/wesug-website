@@ -62,7 +62,7 @@ const Index = () => {
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <Logo />
-          <div className="flex items-center space-x-3">  {/* Changed from space-x-4 to space-x-3 */}
+          <div className="flex items-center space-x-2">  {/* Changed from space-x-3 to space-x-2 */}
             <LanguageSwitch />
             <div className="h-6 w-px bg-gray-200" /> {/* 分隔线 */}
             <UserMenu />
