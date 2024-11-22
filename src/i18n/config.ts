@@ -7,6 +7,7 @@ i18n.use(initReactI18next).init({
   resources: {
     en: {
       translation: {
+        companyName: 'WeConvert',
         heroTitle: 'Professional File Processing Tools',
         heroDescription: 'Efficient and secure file processing solutions for your needs',
         getStarted: 'Get Started',
@@ -48,6 +49,7 @@ i18n.use(initReactI18next).init({
     },
     zh: {
       translation: {
+        companyName: '微转换',
         heroTitle: '专业文件处理工具',
         heroDescription: '高效安全的文件处理解决方案',
         getStarted: '立即开始',
