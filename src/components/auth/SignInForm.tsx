@@ -6,7 +6,6 @@ import { Button } from '../ui/button';
 import { Label } from '../ui/label';
 import { Checkbox } from '../ui/checkbox';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '../ui/input-otp';
-import { useToast } from '../ui/use-toast';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -49,17 +48,20 @@ export const SignInForm = ({ onSubmit, step, countdown, onGetCode }: SignInFormP
                 <FormItem>
                   <Label>{t('phoneNumber')}</Label>
                   <FormControl>
-                    <div className="flex gap-2">
-                      <Input placeholder="1xxxxxxxxxx" {...field} />
-                      <Button type="button" onClick={onGetCode} disabled={!form.getValues('agreement')}>
-                        {t('getCode')}
-                      </Button>
-                    </div>
+                    <Input placeholder="1xxxxxxxxxx" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            <Button 
+              type="button" 
+              onClick={onGetCode} 
+              disabled={!form.getValues('agreement')}
+              className="w-full"
+            >
+              {t('getCode')}
+            </Button>
             <FormField
               control={form.control}
               name="agreement"

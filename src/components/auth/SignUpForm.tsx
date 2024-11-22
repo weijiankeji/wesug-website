@@ -70,17 +70,20 @@ export const SignUpForm = ({ onSubmit, step, countdown, onGetCode }: SignUpFormP
                 <FormItem>
                   <Label>{t('phoneNumber')}</Label>
                   <FormControl>
-                    <div className="flex gap-2">
-                      <Input placeholder="1xxxxxxxxxx" {...field} />
-                      <Button type="button" onClick={onGetCode} disabled={!form.getValues('agreement')}>
-                        {t('getCode')}
-                      </Button>
-                    </div>
+                    <Input placeholder="1xxxxxxxxxx" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            <Button 
+              type="button" 
+              onClick={onGetCode} 
+              disabled={!form.getValues('agreement')}
+              className="w-full"
+            >
+              {t('getCode')}
+            </Button>
             <FormField
               control={form.control}
               name="password"
