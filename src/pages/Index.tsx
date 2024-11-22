@@ -9,7 +9,7 @@ import { UserMenu } from "@/components/UserMenu";
 import { useRef } from "react";
 
 const Index = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const servicesRef = useRef<HTMLDivElement>(null);
 
   const scrollToServices = () => {
@@ -17,7 +17,9 @@ const Index = () => {
   };
 
   const handleDocumentProcessingClick = () => {
-    window.location.href = 'https://pdf.wesug.cn';
+    const baseUrl = 'https://pdf.wesug.cn';
+    const url = i18n.language === 'zh' ? `${baseUrl}/?lang=zh_CN` : baseUrl;
+    window.location.href = url;
   };
 
   const services = [
