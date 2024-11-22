@@ -54,14 +54,29 @@ export const SignInForm = ({ onSubmit, step, countdown, onGetCode }: SignInFormP
                 </FormItem>
               )}
             />
-            <Button 
-              type="button" 
-              onClick={onGetCode} 
-              disabled={!form.getValues('agreement')}
-              className="w-full"
-            >
-              {t('getCode')}
-            </Button>
+            <FormField
+              control={form.control}
+              name="otp"
+              render={({ field }) => (
+                <FormItem>
+                  <Label>{t('verificationCode')}</Label>
+                  <div className="flex gap-2">
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <Button 
+                      type="button" 
+                      onClick={onGetCode} 
+                      disabled={!form.getValues('agreement')}
+                      className="whitespace-nowrap"
+                    >
+                      {countdown > 0 ? `${countdown}s` : t('getCode')}
+                    </Button>
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="agreement"
