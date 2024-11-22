@@ -154,7 +154,7 @@ const Index = () => {
       <footer className="bg-gray-900 text-gray-300 py-12">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 gap-8">
-            <div className="text-center">
+            <div className="text-left">  {/* Changed from text-center to text-left */}
               <h3 className="text-white text-lg font-semibold mb-4">{t('contact')}</h3>
               <p className="text-sm">Email: windyrain1994@163.com</p>
             </div>
