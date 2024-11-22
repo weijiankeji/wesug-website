@@ -66,6 +66,7 @@ export const LoginDialog = ({ open, onOpenChange, onLogin }: LoginDialogProps) =
             countdown={countdown}
             onGetCode={handleSendCode}
             onModeChange={() => setMode('signup')}
+            loginType={loginType}
           />
         ) : (
           <SignUpForm

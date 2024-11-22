@@ -31,6 +31,7 @@ interface SignInFormProps {
   countdown: number;
   onGetCode: () => void;
   onModeChange: () => void;
+  loginType: 'password' | 'otp';
 }
 
 interface LoginTypeSwitchProps {
@@ -58,9 +59,8 @@ const LoginTypeSwitch = ({ loginType, onLoginTypeChange }: LoginTypeSwitchProps)
   );
 };
 
-export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange }: SignInFormProps) => {
+export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, loginType }: SignInFormProps) => {
   const { t } = useTranslation();
-  const [loginType, setLoginType] = React.useState<'password' | 'otp'>('password');
   
   const passwordForm = useForm<z.infer<typeof passwordFormSchema>>({
     resolver: zodResolver(passwordFormSchema),
@@ -186,6 +186,4 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
   );
 };
 
-SignInForm.LoginTypeSwitch = ({ onLoginTypeChange, loginType }: LoginTypeSwitchProps) => (
-  <LoginTypeSwitch loginType={loginType} onLoginTypeChange={onLoginTypeChange} />
-);
+SignInForm.LoginTypeSwitch = LoginTypeSwitch;
