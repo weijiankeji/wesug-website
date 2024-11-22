@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 
 i18n.use(initReactI18next).init({
   fallbackLng: 'en',
-  lng: 'en', // default language
+  lng: 'en',
   resources: {
     en: {
       translation: {
@@ -21,11 +21,11 @@ i18n.use(initReactI18next).init({
         followUs: 'Follow Us',
         rights: 'All rights reserved',
         documentProcessing: 'Document Processing',
-        documentDescription: 'Professional PDF processing tools',
+        documentDescription: 'PDF tools for viewing, merging and splitting',
         imageProcessing: 'Image Processing',
-        imageDescription: 'Efficient image optimization tools',
+        imageDescription: 'Smart image optimization',
         formatConversion: 'Format Conversion',
-        formatDescription: 'Convert between different file formats',
+        formatDescription: 'Convert between formats',
         easyUpload: 'Easy Upload',
         uploadDescription: 'Simple and secure file upload',
         fastProcessing: 'Fast Processing',
@@ -63,11 +63,11 @@ i18n.use(initReactI18next).init({
         followUs: '关注我们',
         rights: '版权所有',
         documentProcessing: '文档处理',
-        documentDescription: '专业PDF处理工具',
+        documentDescription: 'PDF查看与编辑',
         imageProcessing: '图像处理',
-        imageDescription: '高效图像优化工具',
+        imageDescription: '智能图像优化',
         formatConversion: '格式转换',
-        formatDescription: '在不同文件格式之间转换',
+        formatDescription: '多格式转换',
         easyUpload: '轻松上传',
         uploadDescription: '简单安全的文件上传',
         fastProcessing: '快速处理',
