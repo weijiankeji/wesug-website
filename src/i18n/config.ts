@@ -41,6 +41,7 @@ i18n.use(initReactI18next).init({
         clientDescription: 'Get more features and better performance with our desktop application',
         download: 'Download',
         systemRequirements: 'System Requirements: Windows 10/11, macOS 10.15+',
+        mobileApps: 'Mobile Applications',
         login: 'Login',
         logout: 'Logout',
       }
@@ -81,6 +82,7 @@ i18n.use(initReactI18next).init({
         clientDescription: '使用我们的桌面应用程序获得更多功能和更好的性能',
         download: '下载',
         systemRequirements: '系统要求：Windows 10/11、macOS 10.15+',
+        mobileApps: '移动应用',
         login: '登录',
         logout: '退出登录',
       }
