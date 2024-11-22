@@ -3,9 +3,35 @@ import { initReactI18next } from 'react-i18next';
 
 i18n.use(initReactI18next).init({
   fallbackLng: 'en',
+  lng: 'en', // default language
   resources: {
     en: {
       translation: {
+        heroTitle: 'Professional File Processing Tools',
+        heroDescription: 'Efficient and secure file processing solutions for your needs',
+        getStarted: 'Get Started',
+        ourServices: 'Our Services',
+        keyFeatures: 'Key Features',
+        readyToStart: 'Ready to Start?',
+        transformWorkflow: 'Transform your workflow today',
+        tryNow: 'Try Now',
+        companyName: 'WeConvert Tools',
+        since: 'Providing professional tools since 2024',
+        contact: 'Contact',
+        followUs: 'Follow Us',
+        rights: 'All rights reserved',
+        documentProcessing: 'Document Processing',
+        documentDescription: 'Professional PDF processing tools',
+        imageProcessing: 'Image Processing',
+        imageDescription: 'Efficient image optimization tools',
+        formatConversion: 'Format Conversion',
+        formatDescription: 'Convert between different file formats',
+        easyUpload: 'Easy Upload',
+        uploadDescription: 'Simple and secure file upload',
+        fastProcessing: 'Fast Processing',
+        processingDescription: 'Quick and efficient processing',
+        advancedTools: 'Advanced Tools',
+        toolsDescription: 'Professional-grade processing tools',
         pdfPreview: 'PDF Preview - View PDF files online',
         pdfMerge: 'PDF Merge - Combine multiple PDFs into one',
         pdfSplit: 'PDF Split - Extract pages from PDF files',
@@ -15,11 +41,36 @@ i18n.use(initReactI18next).init({
         desktopClient: 'Desktop Client',
         clientDescription: 'Get more features and better performance with our desktop application',
         download: 'Download',
-        systemRequirements: 'System Requirements: Windows 10/11, macOS 10.15+',
+        systemRequirements: 'System Requirements: Windows 10/11, macOS 10.15+'
       }
     },
     zh: {
       translation: {
+        heroTitle: '专业文件处理工具',
+        heroDescription: '高效安全的文件处理解决方案',
+        getStarted: '立即开始',
+        ourServices: '我们的服务',
+        keyFeatures: '核心功能',
+        readyToStart: '准备开始？',
+        transformWorkflow: '今天就改变您的工作流程',
+        tryNow: '立即尝试',
+        companyName: 'WeConvert Tools',
+        since: '自2024年起提供专业工具',
+        contact: '联系我们',
+        followUs: '关注我们',
+        rights: '版权所有',
+        documentProcessing: '文档处理',
+        documentDescription: '专业PDF处理工具',
+        imageProcessing: '图像处理',
+        imageDescription: '高效图像优化工具',
+        formatConversion: '格式转换',
+        formatDescription: '在不同文件格式之间转换',
+        easyUpload: '轻松上传',
+        uploadDescription: '简单安全的文件上传',
+        fastProcessing: '快速处理',
+        processingDescription: '快速高效的处理',
+        advancedTools: '高级工具',
+        toolsDescription: '专业级处理工具',
         pdfPreview: 'PDF预览 - 在线查看PDF文件',
         pdfMerge: 'PDF合并 - 将多个PDF文件合并为一个',
         pdfSplit: 'PDF拆分 - 从PDF文件中提取页面',
@@ -29,9 +80,12 @@ i18n.use(initReactI18next).init({
         desktopClient: '桌面客户端',
         clientDescription: '使用我们的桌面应用程序获得更多功能和更好的性能',
         download: '下载',
-        systemRequirements: '系统要求：Windows 10/11、macOS 10.15+',
+        systemRequirements: '系统要求：Windows 10/11、macOS 10.15+'
       }
     }
+  },
+  interpolation: {
+    escapeValue: false
   }
 });
 
