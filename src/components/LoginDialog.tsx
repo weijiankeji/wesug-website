@@ -15,7 +15,6 @@ interface LoginDialogProps {
 export const LoginDialog = ({ open, onOpenChange, onLogin }: LoginDialogProps) => {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const [step, setStep] = React.useState<'phone' | 'otp'>('phone');
   const [countdown, setCountdown] = React.useState(0);
   const [mode, setMode] = React.useState<'signin' | 'signup'>('signin');
 
@@ -37,28 +36,20 @@ export const LoginDialog = ({ open, onOpenChange, onLogin }: LoginDialogProps) =
       title: t('codeSent'),
     });
     startCountdown();
-    setStep('otp');
   };
 
   const handleSignIn = (values: any) => {
-    if (step === 'otp') {
-      onLogin(values.phone);
-      onOpenChange(false);
-      setStep('phone');
-    }
+    onLogin(values.phone);
+    onOpenChange(false);
   };
 
   const handleSignUp = (values: any) => {
-    if (step === 'otp') {
-      onLogin(values.phone);
-      onOpenChange(false);
-      setStep('phone');
-    }
+    onLogin(values.phone);
+    onOpenChange(false);
   };
 
   const handleModeChange = (newMode: string) => {
     setMode(newMode as 'signin' | 'signup');
-    setStep('phone');
   };
 
   return (
@@ -75,14 +66,12 @@ export const LoginDialog = ({ open, onOpenChange, onLogin }: LoginDialogProps) =
         {mode === 'signin' ? (
           <SignInForm
             onSubmit={handleSignIn}
-            step={step}
             countdown={countdown}
             onGetCode={handleSendCode}
           />
         ) : (
           <SignUpForm
             onSubmit={handleSignUp}
-            step={step}
             countdown={countdown}
             onGetCode={handleSendCode}
           />
