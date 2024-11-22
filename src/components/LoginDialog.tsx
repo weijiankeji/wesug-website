@@ -50,7 +50,7 @@ export const LoginDialog = ({ open, onOpenChange, onLogin }: LoginDialogProps) =
 
   const handleSignUp = (values: any) => {
     if (step === 'otp') {
-      onLogin(values.phone); // You might want to handle this differently for sign up
+      onLogin(values.phone);
       onOpenChange(false);
       setStep('phone');
     }

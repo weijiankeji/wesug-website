@@ -36,6 +36,8 @@ export const SignInForm = ({ onSubmit, step, countdown, onGetCode }: SignInFormP
     }
   });
 
+  const isPhoneValid = form.watch('phone')?.length === 11;
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -67,10 +69,10 @@ export const SignInForm = ({ onSubmit, step, countdown, onGetCode }: SignInFormP
                     <Button 
                       type="button" 
                       onClick={onGetCode} 
-                      disabled={!form.getValues('agreement')}
+                      disabled={!isPhoneValid || countdown > 0}
                       className="whitespace-nowrap"
                     >
-                      {countdown > 0 ? `${countdown}s` : t('getCode')}
+                      {countdown > 0 ? `${countdown}s` : t(countdown === 0 && field.value ? 'getCodeAgain' : 'getCode')}
                     </Button>
                   </div>
                   <FormMessage />
