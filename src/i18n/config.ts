@@ -64,6 +64,10 @@ i18n.use(initReactI18next).init({
         confirmPassword: 'Confirm Password',
         passwordLogin: 'Password Login',
         otpLogin: 'SMS Code Login',
+        noAccount: "Don't have an account?",
+        haveAccount: "Already have an account?",
+        usePassword: "Use Password",
+        useOtp: "Use SMS Code",
       }
     },
     zh: {
@@ -125,6 +129,10 @@ i18n.use(initReactI18next).init({
         confirmPassword: '确认密码',
         passwordLogin: '密码登录',
         otpLogin: '验证码登录',
+        noAccount: '还没有账号？',
+        haveAccount: '已有账号？',
+        usePassword: '使用密码登录',
+        useOtp: '使用短信验证码',
       }
     }
   },

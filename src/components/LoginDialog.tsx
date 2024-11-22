@@ -48,20 +48,34 @@ export const LoginDialog = ({ open, onOpenChange, onLogin }: LoginDialogProps) =
     onOpenChange(false);
   };
 
-  const handleModeChange = (newMode: string) => {
-    setMode(newMode as 'signin' | 'signup');
-  };
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <Tabs defaultValue="signin" onValueChange={handleModeChange}>
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="signin">{t('signIn')}</TabsTrigger>
-              <TabsTrigger value="signup">{t('signUp')}</TabsTrigger>
-            </TabsList>
-          </Tabs>
+        <DialogHeader className="text-center">
+          <h2 className="text-lg font-semibold">{t(mode === 'signin' ? 'signIn' : 'signUp')}</h2>
+          <p className="text-sm text-muted-foreground">
+            {mode === 'signin' ? (
+              <>
+                {t('noAccount')}{' '}
+                <button
+                  onClick={() => setMode('signup')}
+                  className="text-primary hover:underline"
+                >
+                  {t('signUp')}
+                </button>
+              </>
+            ) : (
+              <>
+                {t('haveAccount')}{' '}
+                <button
+                  onClick={() => setMode('signin')}
+                  className="text-primary hover:underline"
+                >
+                  {t('signIn')}
+                </button>
+              </>
+            )}
+          </p>
         </DialogHeader>
         {mode === 'signin' ? (
           <SignInForm

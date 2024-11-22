@@ -5,10 +5,10 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
 import { Checkbox } from '../ui/checkbox';
-import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 
 const passwordFormSchema = z.object({
   phone: z.string().min(11).max(11),
@@ -66,12 +66,15 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode }: SignInFormProps) 
 
   return (
     <div className="space-y-4">
-      <Tabs defaultValue="password" onValueChange={(value) => setLoginType(value as 'password' | 'otp')}>
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="password">{t('passwordLogin')}</TabsTrigger>
-          <TabsTrigger value="otp">{t('otpLogin')}</TabsTrigger>
-        </TabsList>
-      </Tabs>
+      <div className="flex justify-end">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setLoginType(loginType === 'password' ? 'otp' : 'password')}
+        >
+          {loginType === 'password' ? t('useOtp') : t('usePassword')}
+        </Button>
+      </div>
 
       <Form {...currentForm}>
         <form onSubmit={handleSubmit} className="space-y-4">
