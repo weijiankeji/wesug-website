@@ -144,27 +144,24 @@ const Index = () => {
       {/* Footer */}
       <footer className="bg-gray-900 text-gray-300 py-12">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-white text-lg font-semibold mb-4">{t('companyName')}</h3>
-              <p className="text-sm">{t('since')}</p>
-            </div>
-            <div>
+          <div className="grid grid-cols-1 gap-8">
+            <div className="text-center">
               <h3 className="text-white text-lg font-semibold mb-4">{t('contact')}</h3>
-              <p className="text-sm">Email: contact@wesug.com</p>
-              <p className="text-sm">Phone: +1 (555) 123-4567</p>
-            </div>
-            <div>
-              <h3 className="text-white text-lg font-semibold mb-4">{t('followUs')}</h3>
-              <div className="flex space-x-4">
-                <a href="#" className="hover:text-white transition-colors">Twitter</a>
-                <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-                <a href="#" className="hover:text-white transition-colors">GitHub</a>
-              </div>
+              <p className="text-sm">Email: windyrain1994@163.com</p>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-            <p>&copy; 2024 {t('companyName')}. {t('rights')}</p>
+            <p>
+              &copy; 2024 {t('companyName')}. {t('rights')}{' '}
+              <a 
+                href="https://beian.miit.gov.cn/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="hover:text-white transition-colors"
+              >
+                京ICP备2024062306号-2
+              </a>
+            </p>
           </div>
         </div>
       </footer>
