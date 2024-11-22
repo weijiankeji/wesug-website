@@ -33,15 +33,19 @@ interface SignInFormProps {
   onModeChange: () => void;
 }
 
-const LoginTypeSwitch = () => {
+interface LoginTypeSwitchProps {
+  loginType: 'password' | 'otp';
+  onLoginTypeChange: (type: 'password' | 'otp') => void;
+}
+
+const LoginTypeSwitch = ({ loginType, onLoginTypeChange }: LoginTypeSwitchProps) => {
   const { t } = useTranslation();
-  const [loginType, setLoginType] = React.useState<'password' | 'otp'>('password');
 
   return (
     <Button
       variant="ghost"
       size="sm"
-      onClick={() => setLoginType(loginType === 'password' ? 'otp' : 'password')}
+      onClick={() => onLoginTypeChange(loginType === 'password' ? 'otp' : 'password')}
       className="text-primary hover:text-primary/80 px-2"
     >
       {loginType === 'password' ? (
@@ -182,4 +186,6 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
   );
 };
 
-SignInForm.LoginTypeSwitch = LoginTypeSwitch;
+SignInForm.LoginTypeSwitch = ({ onLoginTypeChange, loginType }: LoginTypeSwitchProps) => (
+  <LoginTypeSwitch loginType={loginType} onLoginTypeChange={onLoginTypeChange} />
+);

@@ -16,6 +16,7 @@ export const LoginDialog = ({ open, onOpenChange, onLogin }: LoginDialogProps) =
   const { toast } = useToast();
   const [countdown, setCountdown] = React.useState(0);
   const [mode, setMode] = React.useState<'signin' | 'signup'>('signin');
+  const [loginType, setLoginType] = React.useState<'password' | 'otp'>('password');
 
   const startCountdown = () => {
     setCountdown(60);
@@ -52,7 +53,12 @@ export const LoginDialog = ({ open, onOpenChange, onLogin }: LoginDialogProps) =
       <DialogContent className="sm:max-w-md">
         <DialogHeader className="flex flex-row items-center justify-between">
           <h2 className="text-lg font-semibold">{t(mode === 'signin' ? 'signIn' : 'signUp')}</h2>
-          {mode === 'signin' && <SignInForm.LoginTypeSwitch />}
+          {mode === 'signin' && (
+            <SignInForm.LoginTypeSwitch
+              loginType={loginType}
+              onLoginTypeChange={setLoginType}
+            />
+          )}
         </DialogHeader>
         {mode === 'signin' ? (
           <SignInForm
