@@ -27,9 +27,10 @@ interface SignUpFormProps {
   onSubmit: (values: z.infer<typeof formSchema>) => void;
   countdown: number;
   onGetCode: () => void;
+  onModeChange: () => void;
 }
 
-export const SignUpForm = ({ onSubmit, countdown, onGetCode }: SignUpFormProps) => {
+export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: SignUpFormProps) => {
   const { t } = useTranslation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -142,6 +143,17 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode }: SignUpFormProps) 
         <Button type="submit" className="w-full">
           {t('signUp')}
         </Button>
+
+        <div className="text-center text-sm">
+          <span className="text-muted-foreground">{t('haveAccount')}</span>{' '}
+          <Button
+            variant="link"
+            className="p-0 h-auto font-normal"
+            onClick={onModeChange}
+          >
+            {t('signIn')}
+          </Button>
+        </div>
       </form>
     </Form>
   );
