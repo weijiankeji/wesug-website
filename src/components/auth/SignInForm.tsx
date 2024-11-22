@@ -30,9 +30,31 @@ interface SignInFormProps {
   onSubmit: (values: any) => void;
   countdown: number;
   onGetCode: () => void;
+  onModeChange: () => void;
 }
 
-export const SignInForm = ({ onSubmit, countdown, onGetCode }: SignInFormProps) => {
+const LoginTypeSwitch = () => {
+  const { t } = useTranslation();
+  const [loginType, setLoginType] = React.useState<'password' | 'otp'>('password');
+
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={() => setLoginType(loginType === 'password' ? 'otp' : 'password')}
+      className="text-primary hover:text-primary/80 px-2"
+    >
+      {loginType === 'password' ? (
+        <MessageSquareCode className="h-4 w-4 mr-2" />
+      ) : (
+        <KeyRound className="h-4 w-4 mr-2" />
+      )}
+      {loginType === 'password' ? t('useOtp') : t('usePassword')}
+    </Button>
+  );
+};
+
+export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange }: SignInFormProps) => {
   const { t } = useTranslation();
   const [loginType, setLoginType] = React.useState<'password' | 'otp'>('password');
   
@@ -66,22 +88,6 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode }: SignInFormProps) 
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setLoginType(loginType === 'password' ? 'otp' : 'password')}
-          className="text-primary hover:text-primary/80"
-        >
-          {loginType === 'password' ? (
-            <MessageSquareCode className="h-4 w-4 mr-2" />
-          ) : (
-            <KeyRound className="h-4 w-4 mr-2" />
-          )}
-          {loginType === 'password' ? t('useOtp') : t('usePassword')}
-        </Button>
-      </div>
-
       <Form {...currentForm}>
         <form onSubmit={handleSubmit} className="space-y-4">
           <FormField
@@ -128,8 +134,7 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode }: SignInFormProps) 
                       onClick={onGetCode} 
                       disabled={!isPhoneValid || countdown > 0}
                       variant="outline"
-                      size="icon"
-                      className="shrink-0 w-12 h-10 text-xs font-medium"
+                      className="shrink-0 min-w-[4rem] h-10"
                     >
                       {countdown > 0 ? countdown : t('getCode')}
                     </Button>
@@ -160,8 +165,21 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode }: SignInFormProps) 
           <Button type="submit" className="w-full">
             {t('signIn')}
           </Button>
+
+          <div className="text-center text-sm">
+            <span className="text-muted-foreground">{t('noAccount')}</span>{' '}
+            <Button
+              variant="link"
+              className="p-0 h-auto font-normal"
+              onClick={onModeChange}
+            >
+              {t('signUp')}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
   );
 };
+
+SignInForm.LoginTypeSwitch = LoginTypeSwitch;

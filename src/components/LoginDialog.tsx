@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogHeader } from './ui/dialog';
 import { useToast } from './ui/use-toast';
-import { Tabs, TabsList, TabsTrigger } from './ui/tabs';
 import { SignInForm } from './auth/SignInForm';
 import { SignUpForm } from './auth/SignUpForm';
 
@@ -51,43 +50,23 @@ export const LoginDialog = ({ open, onOpenChange, onLogin }: LoginDialogProps) =
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
-        <DialogHeader className="text-center">
+        <DialogHeader className="flex flex-row items-center justify-between">
           <h2 className="text-lg font-semibold">{t(mode === 'signin' ? 'signIn' : 'signUp')}</h2>
-          <p className="text-sm text-muted-foreground">
-            {mode === 'signin' ? (
-              <>
-                {t('noAccount')}{' '}
-                <button
-                  onClick={() => setMode('signup')}
-                  className="text-primary hover:underline"
-                >
-                  {t('signUp')}
-                </button>
-              </>
-            ) : (
-              <>
-                {t('haveAccount')}{' '}
-                <button
-                  onClick={() => setMode('signin')}
-                  className="text-primary hover:underline"
-                >
-                  {t('signIn')}
-                </button>
-              </>
-            )}
-          </p>
+          {mode === 'signin' && <SignInForm.LoginTypeSwitch />}
         </DialogHeader>
         {mode === 'signin' ? (
           <SignInForm
             onSubmit={handleSignIn}
             countdown={countdown}
             onGetCode={handleSendCode}
+            onModeChange={() => setMode('signup')}
           />
         ) : (
           <SignUpForm
             onSubmit={handleSignUp}
             countdown={countdown}
             onGetCode={handleSendCode}
+            onModeChange={() => setMode('signin')}
           />
         )}
       </DialogContent>
