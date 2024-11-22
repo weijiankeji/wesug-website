@@ -8,7 +8,7 @@ import { Checkbox } from '../ui/checkbox';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
+import { MessageSquareCode, KeyRound } from 'lucide-react';
 
 const passwordFormSchema = z.object({
   phone: z.string().min(11).max(11),
@@ -71,7 +71,13 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode }: SignInFormProps) 
           variant="ghost"
           size="sm"
           onClick={() => setLoginType(loginType === 'password' ? 'otp' : 'password')}
+          className="text-primary hover:text-primary/80"
         >
+          {loginType === 'password' ? (
+            <MessageSquareCode className="h-4 w-4 mr-2" />
+          ) : (
+            <KeyRound className="h-4 w-4 mr-2" />
+          )}
           {loginType === 'password' ? t('useOtp') : t('usePassword')}
         </Button>
       </div>
@@ -121,9 +127,11 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode }: SignInFormProps) 
                       type="button" 
                       onClick={onGetCode} 
                       disabled={!isPhoneValid || countdown > 0}
-                      className="whitespace-nowrap"
+                      variant="outline"
+                      size="icon"
+                      className="shrink-0 w-12 h-10 text-xs font-medium"
                     >
-                      {countdown > 0 ? `${countdown}s` : t(countdown === 0 && field.value ? 'getCodeAgain' : 'getCode')}
+                      {countdown > 0 ? countdown : t('getCode')}
                     </Button>
                   </div>
                   <FormMessage />
