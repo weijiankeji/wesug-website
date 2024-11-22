@@ -6,9 +6,15 @@ import { LanguageSwitch } from "@/components/LanguageSwitch";
 import DownloadSection from "@/components/DownloadSection";
 import Logo from "@/components/Logo";
 import { UserMenu } from "@/components/UserMenu";
+import { useRef } from "react";
 
 const Index = () => {
   const { t } = useTranslation();
+  const servicesRef = useRef<HTMLDivElement>(null);
+
+  const scrollToServices = () => {
+    servicesRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const services = [
     {
@@ -59,6 +65,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Header Section */}
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <Logo />
@@ -80,6 +87,7 @@ const Index = () => {
             <Button
               size="lg"
               className="bg-white text-primary hover:bg-gray-100 transition-colors"
+              onClick={scrollToServices}
             >
               {t('getStarted')}
             </Button>
@@ -88,7 +96,7 @@ const Index = () => {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 bg-gray-50">
+      <section ref={servicesRef} className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">{t('ourServices')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -135,6 +143,7 @@ const Index = () => {
           <Button
             size="lg"
             className="bg-white text-primary hover:bg-gray-100 transition-colors"
+            onClick={scrollToServices}
           >
             {t('tryNow')}
           </Button>
