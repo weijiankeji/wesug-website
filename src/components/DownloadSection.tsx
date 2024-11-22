@@ -30,16 +30,29 @@ const DownloadSection = () => {
 
         {/* Mobile Apps */}
         <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-semibold mb-4">{t('mobileApps')}</h3>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button variant="outline" className="flex items-center gap-2">
-              <Download className="w-4 h-4" />
-              Android App
-            </Button>
-            <Button variant="outline" className="flex items-center gap-2">
-              <Download className="w-4 h-4" />
-              iOS App
-            </Button>
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-xl font-semibold">{t('mobileApps')}</h3>
+              <p className="text-gray-600">{t('clientDescription')}</p>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1 p-4 border rounded-lg">
+              <h4 className="font-medium mb-2">Android App</h4>
+              <p className="text-sm text-gray-500 mb-4">{t('systemRequirements')}</p>
+              <Button variant="outline" className="w-full flex items-center justify-center gap-2">
+                <Download className="w-4 h-4" />
+                Download APK
+              </Button>
+            </div>
+            <div className="flex-1 p-4 border rounded-lg">
+              <h4 className="font-medium mb-2">iOS App</h4>
+              <p className="text-sm text-gray-500 mb-4">{t('systemRequirements')}</p>
+              <Button variant="outline" className="w-full flex items-center justify-center gap-2">
+                <Download className="w-4 h-4" />
+                App Store
+              </Button>
+            </div>
           </div>
         </div>
       </div>
