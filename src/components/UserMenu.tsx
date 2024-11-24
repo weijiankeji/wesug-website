@@ -19,6 +19,14 @@ const useAuth = () => {
   const { toast } = useToast();
   const { t } = useTranslation();
 
+  React.useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem('user-info') || '{}');
+    if (userInfo.accessToken && userInfo.username) {
+      setIsLoggedIn(true);
+      setUser({ username: userInfo.username });
+    }
+  }, []);
+
   const login = (data: {
     mobile: string;
     password?: string;
@@ -28,7 +36,7 @@ const useAuth = () => {
     request('POST', '/user/login', data).then((res) => {
       if (res.data.success) {
         setIsLoggedIn(true);
-        setUser(res.data);
+        setUser({ username: res.data.username });
       }
     }).catch((error) => {
       toast({
@@ -49,7 +57,7 @@ const useAuth = () => {
     request('POST', '/user/register', data).then((res) => {
       if (res.data.success) {
         setIsLoggedIn(true);
-        setUser(res.data);
+        setUser({ username: res.data.username });
       }
     }).catch((error) => {
       toast({

@@ -32,9 +32,17 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
     // Check if token needs to be stored
-    if (response.config.url === '/user/login' || response.config.url === '/refreshToken') {
+    if (response.config.url === '/user/login') {
+      const { accessToken, refreshToken, username } = response.data;
+      localStorage.setItem('user-info', JSON.stringify({ accessToken, refreshToken, username }));
+    } else if (response.config.url === '/refreshToken') {
+      const userInfo = JSON.parse(localStorage.getItem('user-info') || '{}');
       const { accessToken, refreshToken } = response.data;
-      localStorage.setItem('user-info', JSON.stringify({ accessToken, refreshToken }));
+      localStorage.setItem('user-info', JSON.stringify({ 
+        ...userInfo,
+        accessToken, 
+        refreshToken 
+      }));
     }
     return response;
   },
@@ -50,7 +58,11 @@ instance.interceptors.response.use(
         if (refreshToken) {
           const res = await instance.post('/refreshToken', { refreshToken });
           const { accessToken, refreshToken: newRefreshToken } = res.data;
-          localStorage.setItem('user-info', JSON.stringify({ accessToken, refreshToken: newRefreshToken }));
+          localStorage.setItem('user-info', JSON.stringify({ 
+            ...userInfo,
+            accessToken, 
+            refreshToken: newRefreshToken 
+          }));
 
           // Reset request headers
           originalRequest.headers!.Authorization = `Bearer ${accessToken}`;
