@@ -80,20 +80,34 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
     }
   });
 
+  // Reset forms when switching login type
+  React.useEffect(() => {
+    if (loginType === 1) {
+      smscodeForm.reset();
+    } else {
+      passwordForm.reset();
+    }
+  }, [loginType]);
+
   const isMobileValid = loginType === 1
     ? passwordForm.watch('mobile')?.length === 11
     : smscodeForm.watch('mobile')?.length === 11;
 
-  const handleSubmit = loginType === 1
-    ? passwordForm.handleSubmit(onSubmit)
-    : smscodeForm.handleSubmit(onSubmit);
+  const handleSubmit = (values: any) => {
+    onSubmit({
+      ...values,
+      loginType,
+      // Convert smscode to number if present
+      ...(values.smscode && { smscode: Number(values.smscode) })
+    });
+  };
 
   const currentForm = loginType === 1 ? passwordForm : smscodeForm;
 
   return (
     <div className="space-y-4">
       <Form {...currentForm}>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={currentForm.handleSubmit(handleSubmit)} className="space-y-4">
           <FormField
             control={currentForm.control}
             name="mobile"
