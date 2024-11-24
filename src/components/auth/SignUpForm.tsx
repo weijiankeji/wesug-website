@@ -42,7 +42,7 @@ interface SignUpFormProps {
 
 export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: SignUpFormProps) => {
   const { t } = useTranslation();
-  
+
   const form = useForm<z.infer<ReturnType<typeof formSchema>>>({
     resolver: zodResolver(formSchema(t)),
     defaultValues: {
@@ -102,7 +102,7 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
                   disabled={!isPhoneValid || countdown > 0}
                   className="whitespace-nowrap"
                 >
-                  {countdown > 0 ? `${countdown}s` : t(countdown === 0 && field.value ? 'getCodeAgain' : 'getCode')}
+                  {countdown > 0 ? `${countdown}s` : t('getCode')}
                 </Button>
               </div>
               <FormMessage />
