@@ -11,11 +11,13 @@ import { LogIn, LogOut, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { LoginDialog } from './LoginDialog';
 import { request } from '@/request';
+import { useToast } from "@/hooks/use-toast";
 
-// Mock user state (replace with real authentication later)
 const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [user, setUser] = React.useState<{ username: string; } | null>(null);
+  const { toast } = useToast();
+  const { t } = useTranslation();
 
   const login = (data: {
     mobile: string;
@@ -28,6 +30,12 @@ const useAuth = () => {
         setIsLoggedIn(true);
         setUser(res.data);
       }
+    }).catch((error) => {
+      toast({
+        variant: "destructive",
+        title: t("loginError"),
+        description: error.response?.data?.message || t("unknownError")
+      });
     });
   };
 
@@ -43,6 +51,12 @@ const useAuth = () => {
         setIsLoggedIn(true);
         setUser(res.data);
       }
+    }).catch((error) => {
+      toast({
+        variant: "destructive",
+        title: t("registerError"),
+        description: error.response?.data?.message || t("unknownError")
+      });
     });
   }
 
