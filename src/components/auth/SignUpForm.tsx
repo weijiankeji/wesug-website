@@ -135,23 +135,27 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="agreement"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-              <FormControl>
-                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <Label>
-                  {t('agreeToTerms')} <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{t('terms')}</a> {t('and')} <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{t('privacy')}</a>
-                </Label>
+            <FormItem className="flex flex-col space-y-2">
+              <div className="flex flex-row items-start space-x-3">
+                <FormControl>
+                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <Label>
+                    {t('agreeToTerms')} <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{t('terms')}</a> {t('and')} <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{t('privacy')}</a>
+                  </Label>
+                </div>
               </div>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <Button type="submit" className="w-full">
           {t('signUp')}
         </Button>
