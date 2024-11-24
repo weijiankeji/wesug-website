@@ -43,25 +43,29 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
 
   // Sync mobile number between forms when it changes
   React.useEffect(() => {
-    const unsubscribePassword = passwordForm.watch((value, { name }) => {
-      if (name === 'mobile' && loginType === 1) {
-        smscodeForm.setValue('mobile', value.mobile || '', { shouldValidate: false });
-      }
-    });
+    const subscription = loginType === 1
+      ? passwordForm.watch((value) => {
+          const mobile = value.mobile;
+          if (mobile !== undefined) {
+            smscodeForm.setValue('mobile', mobile, { shouldValidate: false });
+          }
+        })
+      : smscodeForm.watch((value) => {
+          const mobile = value.mobile;
+          if (mobile !== undefined) {
+            passwordForm.setValue('mobile', mobile, { shouldValidate: false });
+          }
+        });
 
-    const unsubscribeSMS = smscodeForm.watch((value, { name }) => {
-      if (name === 'mobile' && loginType === 2) {
-        passwordForm.setValue('mobile', value.mobile || '', { shouldValidate: false });
-      }
-    });
+    return () => subscription.unsubscribe();
+  }, [loginType, passwordForm, smscodeForm]);
 
-    return () => {
-      unsubscribePassword();
-      unsubscribeSMS();
-    };
-  }, [loginType]);
-
-  const isMobileValid = (loginType === 1 ? passwordForm : smscodeForm).getValues('mobile')?.length === 11;
+  const isMobileValid = React.useMemo(() => {
+    const mobile = loginType === 1 
+      ? passwordForm.getValues('mobile')
+      : smscodeForm.getValues('mobile');
+    return mobile?.length === 11;
+  }, [loginType, passwordForm, smscodeForm]);
 
   const handleSubmit = (values: any) => {
     onSubmit({
