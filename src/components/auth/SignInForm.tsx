@@ -55,10 +55,7 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
     form.setValue('smscode', undefined, { shouldValidate: false });
   }, [loginType, form]);
 
-  const isMobileValid = React.useMemo(() => {
-    const mobile = form.watch('mobile');
-    return /^1\d{10}$/.test(mobile);
-  }, [form]);
+  const isMobileValid = form.formState.dirtyFields.mobile && !form.formState.errors.mobile;
 
   const handleSubmit = (values: FormData) => {
     onSubmit({
