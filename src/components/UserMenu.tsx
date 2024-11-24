@@ -72,15 +72,21 @@ export const UserMenu = () => {
           <LogIn className="h-4 w-4" />
           {t('login')}
         </Button>
-        <LoginDialog
-          open={showLoginDialog}
-          onOpenChange={setShowLoginDialog}
-          onLogin={login}
-          onRegister={register}
-        />
+        {showLoginDialog && (
+          <LoginDialog
+            open={showLoginDialog}
+            onOpenChange={setShowLoginDialog}
+            onLogin={login}
+            onRegister={register}
+          />
+        )}
       </>
     );
   }
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <DropdownMenu>
@@ -95,7 +101,7 @@ export const UserMenu = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={logout} className="text-red-600">
+        <DropdownMenuItem onClick={handleLogout} className="text-red-600">
           <LogOut className="h-4 w-4 mr-2" />
           {t('logout')}
         </DropdownMenuItem>
