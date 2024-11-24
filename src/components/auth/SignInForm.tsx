@@ -127,10 +127,9 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
                       type="button"
                       onClick={onGetCode}
                       disabled={!isMobileValid || countdown > 0}
-                      variant="outline"
-                      className="shrink-0 min-w-[4rem] h-10"
+                      className="whitespace-nowrap"
                     >
-                      {countdown > 0 ? countdown : t('getCode')}
+                      {countdown > 0 ? `${countdown}s` : t('getCode')}
                     </Button>
                   </div>
                   <FormMessage />
