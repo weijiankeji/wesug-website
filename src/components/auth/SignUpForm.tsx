@@ -43,7 +43,6 @@ interface SignUpFormProps {
 
 export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: SignUpFormProps) => {
   const { t } = useTranslation();
-  const { toast } = useToast();
   
   const form = useForm<z.infer<ReturnType<typeof formSchema>>>({
     resolver: zodResolver(formSchema(t)),
@@ -57,22 +56,11 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
     }
   });
 
-  const handleSubmit = (values: z.infer<ReturnType<typeof formSchema>>) => {
-    if (!values.agreement) {
-      toast({
-        variant: "destructive",
-        title: t('agreementRequired'),
-      });
-      return;
-    }
-    onSubmit(values);
-  };
-
   const isPhoneValid = form.watch('mobile')?.length === 11;
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="username"
