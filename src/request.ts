@@ -32,7 +32,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
     // Check if token needs to be stored
-    if (response.config.url === '/user/login') {
+    if (response.config.url === '/user/login' || response.config.url === '/user/register') {
       const { accessToken, refreshToken, username } = response.data;
       localStorage.setItem('user-info', JSON.stringify({ accessToken, refreshToken, username }));
     } else if (response.config.url === '/refreshToken') {
