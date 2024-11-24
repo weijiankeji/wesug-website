@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginTypeSwitch } from './LoginTypeSwitch';
 import { z } from 'zod';
+import { useToast } from '../ui/use-toast';
 
 const formSchema = (t: any) => z.object({
   mobile: z.string().regex(/^1\d{10}$/, {
@@ -37,6 +38,7 @@ interface SignInFormProps {
 
 export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, loginType }: SignInFormProps) => {
   const { t } = useTranslation();
+  const { toast } = useToast();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema(t)),
@@ -55,6 +57,13 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
   }, [form]);
 
   const handleSubmit = (values: FormData) => {
+    if (!values.agreement) {
+      toast({
+        variant: "destructive",
+        title: t('agreementRequired'),
+      });
+      return;
+    }
     onSubmit({
       mobile: values.mobile,
       ...(loginType === 1 ? { password: values.password } : { smscode: Number(values.smscode) }),
