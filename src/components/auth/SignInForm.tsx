@@ -45,19 +45,19 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
   React.useEffect(() => {
     if (loginType === 1) {
       const values = passwordForm.getValues();
-      smscodeForm.setValue('mobile', values.mobile);
-      smscodeForm.setValue('agreement', values.agreement);
+      smscodeForm.setValue('mobile', values.mobile, { shouldValidate: true });
+      smscodeForm.setValue('agreement', values.agreement, { shouldValidate: true });
     } else {
       const values = smscodeForm.getValues();
-      passwordForm.setValue('mobile', values.mobile);
-      passwordForm.setValue('agreement', values.agreement);
+      passwordForm.setValue('mobile', values.mobile, { shouldValidate: true });
+      passwordForm.setValue('agreement', values.agreement, { shouldValidate: true });
     }
   }, [loginType, passwordForm, smscodeForm]);
 
   const isMobileValid = React.useMemo(() => {
     const mobile = loginType === 1 
-      ? passwordForm.getValues('mobile')
-      : smscodeForm.getValues('mobile');
+      ? passwordForm.watch('mobile')
+      : smscodeForm.watch('mobile');
     return /^1\d{10}$/.test(mobile);
   }, [loginType, passwordForm, smscodeForm]);
 
