@@ -41,33 +41,27 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
     mode: 'onSubmit'
   });
 
-  // Sync mobile number between forms
+  // Sync mobile number between forms when it changes
   React.useEffect(() => {
-    const currentMobile = loginType === 1 
-      ? passwordForm.watch('mobile') 
-      : smscodeForm.watch('mobile');
-    
-    if (currentMobile) {
-      if (loginType === 1) {
-        smscodeForm.setValue('mobile', currentMobile, { shouldValidate: false });
-      } else {
-        passwordForm.setValue('mobile', currentMobile, { shouldValidate: false });
+    const unsubscribePassword = passwordForm.watch((value, { name }) => {
+      if (name === 'mobile' && loginType === 1) {
+        smscodeForm.setValue('mobile', value.mobile || '', { shouldValidate: false });
       }
-    }
+    });
+
+    const unsubscribeSMS = smscodeForm.watch((value, { name }) => {
+      if (name === 'mobile' && loginType === 2) {
+        passwordForm.setValue('mobile', value.mobile || '', { shouldValidate: false });
+      }
+    });
+
+    return () => {
+      unsubscribePassword();
+      unsubscribeSMS();
+    };
   }, [loginType]);
 
-  // Only reset the password/smscode field when switching
-  React.useEffect(() => {
-    if (loginType === 1) {
-      smscodeForm.setValue('smscode', '', { shouldValidate: false });
-    } else {
-      passwordForm.setValue('password', '', { shouldValidate: false });
-    }
-  }, [loginType]);
-
-  const isMobileValid = loginType === 1
-    ? passwordForm.watch('mobile')?.length === 11
-    : smscodeForm.watch('mobile')?.length === 11;
+  const isMobileValid = (loginType === 1 ? passwordForm : smscodeForm).getValues('mobile')?.length === 11;
 
   const handleSubmit = (values: any) => {
     onSubmit({
