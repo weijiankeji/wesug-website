@@ -85,6 +85,7 @@ export const UserMenu = () => {
   }
 
   const handleLogout = () => {
+    setShowLoginDialog(false);
     logout();
   };
 
