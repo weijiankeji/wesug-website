@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
@@ -38,8 +38,8 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
     resolver: zodResolver(formSchema),
     defaultValues: {
       mobile: '',
-      password: '',
-      smscode: '',
+      password: undefined,
+      smscode: undefined,
       agreement: false
     },
     mode: 'onChange'
@@ -49,6 +49,14 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
     const mobile = form.watch('mobile');
     return /^1\d{10}$/.test(mobile);
   }, [form]);
+
+  useEffect(() => {
+    if (loginType === 1) {
+      form.setValue("smscode", undefined);
+    } else {
+      form.setValue("password", undefined);
+    }
+  }, [loginType, form])
 
   const handleSubmit = (values: FormData) => {
     onSubmit({
@@ -79,6 +87,7 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
 
           {loginType === 1 ? (
             <FormField
+              key="password-form-item"
               control={form.control}
               name="password"
               render={({ field }) => (
@@ -93,6 +102,7 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
             />
           ) : (
             <FormField
+              key="smscode-form-item"
               control={form.control}
               name="smscode"
               render={({ field }) => (
