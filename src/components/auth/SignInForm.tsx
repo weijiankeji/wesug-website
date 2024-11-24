@@ -10,18 +10,22 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginTypeSwitch } from './LoginTypeSwitch';
 import { z } from 'zod';
 
-const formSchema = z.object({
+const formSchema = (t: any) => z.object({
   mobile: z.string().regex(/^1\d{10}$/, {
-    message: "Please enter a valid phone number"
+    message: t('invalidPhone')
   }),
-  password: z.string().min(6).optional(),
-  smscode: z.string().length(6).optional(),
+  password: z.string().min(6, {
+    message: t('passwordMinLength')
+  }).optional(),
+  smscode: z.string().length(6, {
+    message: t('invalidCode')
+  }).optional(),
   agreement: z.boolean().refine((val) => val === true, {
-    message: "You must agree to the terms and privacy policy"
+    message: t('agreementRequired')
   })
 });
 
-type FormData = z.infer<typeof formSchema>;
+type FormData = z.infer<ReturnType<typeof formSchema>>;
 
 interface SignInFormProps {
   onSubmit: (values: any) => void;
@@ -35,11 +39,11 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
   const { t } = useTranslation();
 
   const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema(t)),
     defaultValues: {
       mobile: '',
-      password: undefined,
-      smscode: undefined,
+      password: '',
+      smscode: '',
       agreement: false
     },
     mode: 'onChange'
@@ -49,14 +53,6 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
     const mobile = form.watch('mobile');
     return /^1\d{10}$/.test(mobile);
   }, [form]);
-
-  useEffect(() => {
-    if (loginType === 1) {
-      form.setValue("smscode", undefined);
-    } else {
-      form.setValue("password", undefined);
-    }
-  }, [loginType, form])
 
   const handleSubmit = (values: FormData) => {
     onSubmit({
@@ -78,7 +74,7 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
               <FormItem>
                 <Label>{t('phoneNumber')}</Label>
                 <FormControl>
-                  <Input {...field} />
+                  <Input placeholder={t('enterPhone')} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -87,14 +83,13 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
 
           {loginType === 1 ? (
             <FormField
-              key="password-form-item"
               control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
                   <Label>{t('password')}</Label>
                   <FormControl>
-                    <Input type="password" {...field} />
+                    <Input type="password" placeholder={t('enterPassword')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -102,7 +97,6 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
             />
           ) : (
             <FormField
-              key="smscode-form-item"
               control={form.control}
               name="smscode"
               render={({ field }) => (
@@ -110,7 +104,7 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
                   <Label>{t('verificationCode')}</Label>
                   <div className="flex gap-2">
                     <FormControl>
-                      <Input {...field} />
+                      <Input placeholder={t('enterCode')} {...field} />
                     </FormControl>
                     <Button
                       type="button"

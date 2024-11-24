@@ -59,7 +59,7 @@ i18n.use(initReactI18next).init({
         signIn: 'Sign In',
         signUp: 'Sign Up',
         username: 'Nick Name',
-        enterName: 'Enter your nick name',
+        enterName: 'Please enter your nickname',
         password: 'Password',
         password1: 'Confirm Password',
         passwordLogin: 'Password Login',
@@ -68,6 +68,13 @@ i18n.use(initReactI18next).init({
         haveAccount: "Already have an account?",
         usePassword: "Use Password",
         useSmscode: "Use SMS Code",
+        // Validation messages
+        invalidPhone: 'Please enter a valid phone number',
+        invalidCode: 'Please enter a valid verification code',
+        passwordMinLength: 'Password must be at least 6 characters',
+        usernameMinLength: 'Username must be at least 2 characters',
+        passwordsNotMatch: "Passwords don't match",
+        agreementRequired: 'You must agree to the terms and privacy policy'
       }
     },
     zh: {
@@ -124,7 +131,7 @@ i18n.use(initReactI18next).init({
         signIn: '登录',
         signUp: '注册',
         username: '昵称',
-        enterName: '请输入你的昵称',
+        enterName: '请输入昵称',
         password: '密码',
         password1: '确认密码',
         passwordLogin: '密码登录',
@@ -133,6 +140,13 @@ i18n.use(initReactI18next).init({
         haveAccount: '已有账号？',
         usePassword: '使用密码登录',
         useSmscode: '使用短信验证码',
+        // Validation messages
+        invalidPhone: '请输入有效的手机号',
+        invalidCode: '请输入有效的验证码',
+        passwordMinLength: '密码至少需要6个字符',
+        usernameMinLength: '用户名至少需要2个字符',
+        passwordsNotMatch: '两次输入的密码不一致',
+        agreementRequired: '请同意用户协议和隐私政策'
       }
     }
   },

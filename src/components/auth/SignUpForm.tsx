@@ -9,22 +9,32 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const formSchema = z.object({
-  username: z.string().min(2),
-  mobile: z.string().min(11).max(11),
-  password: z.string().min(6),
-  password1: z.string().min(6),
-  smscode: z.string().length(6),
+const formSchema = (t: any) => z.object({
+  username: z.string().min(2, {
+    message: t('usernameMinLength')
+  }),
+  mobile: z.string().regex(/^1\d{10}$/, {
+    message: t('invalidPhone')
+  }),
+  password: z.string().min(6, {
+    message: t('passwordMinLength')
+  }),
+  password1: z.string().min(6, {
+    message: t('passwordMinLength')
+  }),
+  smscode: z.string().length(6, {
+    message: t('invalidCode')
+  }),
   agreement: z.boolean().refine((val) => val === true, {
-    message: "You must agree to the terms and privacy policy"
+    message: t('agreementRequired')
   })
 }).refine((data) => data.password === data.password1, {
-  message: "Passwords don't match",
+  message: t('passwordsNotMatch'),
   path: ["password1"],
 });
 
 interface SignUpFormProps {
-  onSubmit: (values: z.infer<typeof formSchema>) => void;
+  onSubmit: (values: z.infer<ReturnType<typeof formSchema>>) => void;
   countdown: number;
   onGetCode: () => void;
   onModeChange: () => void;
@@ -32,11 +42,11 @@ interface SignUpFormProps {
 
 export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: SignUpFormProps) => {
   const { t } = useTranslation();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<ReturnType<typeof formSchema>>>({
+    resolver: zodResolver(formSchema(t)),
     defaultValues: {
       username: '',
-      mobile: '', // Changed from 'phone' to 'mobile'
+      mobile: '',
       password: '',
       password1: '',
       smscode: '',
@@ -69,7 +79,7 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
             <FormItem>
               <Label>{t('phoneNumber')}</Label>
               <FormControl>
-                <Input placeholder="1xxxxxxxxxx" {...field} />
+                <Input placeholder={t('enterPhone')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -83,7 +93,7 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
               <Label>{t('verificationCode')}</Label>
               <div className="flex gap-2">
                 <FormControl>
-                  <Input {...field} />
+                  <Input placeholder={t('enterCode')} {...field} />
                 </FormControl>
                 <Button
                   type="button"
@@ -105,7 +115,7 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
             <FormItem>
               <Label>{t('password')}</Label>
               <FormControl>
-                <Input type="password" {...field} />
+                <Input type="password" placeholder={t('enterPassword')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -118,7 +128,7 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
             <FormItem>
               <Label>{t('password1')}</Label>
               <FormControl>
-                <Input type="password" {...field} />
+                <Input type="password" placeholder={t('confirmPassword')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
