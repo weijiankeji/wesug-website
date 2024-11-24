@@ -5,83 +5,40 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
 import { Checkbox } from '../ui/checkbox';
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { MessageSquareCode, KeyRound } from 'lucide-react';
-
-const passwordFormSchema = z.object({
-  mobile: z.string().regex(/^1\d{10}$/, {
-    message: "Please enter a valid phone number"
-  }),
-  password: z.string().min(6),
-  agreement: z.boolean().refine((val) => val === true, {
-    message: "You must agree to the terms and privacy policy"
-  })
-});
-
-const smscodeFormSchema = z.object({
-  mobile: z.string().regex(/^1\d{10}$/, {
-    message: "Please enter a valid phone number"
-  }),
-  smscode: z.string().length(6),
-  agreement: z.boolean().refine((val) => val === true, {
-    message: "You must agree to the terms and privacy policy"
-  })
-});
+import { LoginTypeSwitch } from './LoginTypeSwitch';
+import { passwordFormSchema, smscodeFormSchema, PasswordFormData, SMSCodeFormData } from './formSchemas';
 
 interface SignInFormProps {
-  onSubmit: (values) => void;
+  onSubmit: (values: any) => void;
   countdown: number;
   onGetCode: () => void;
   onModeChange: () => void;
   loginType: 1 | 2;
 }
 
-interface LoginTypeSwitchProps {
-  loginType: 1 | 2;
-  onLoginTypeChange: (type: 1 | 2) => void;
-}
-
-const LoginTypeSwitch = ({ loginType, onLoginTypeChange }: LoginTypeSwitchProps) => {
-  const { t } = useTranslation();
-
-  return (
-    <Button
-      variant="ghost"
-      size="sm"
-      onClick={() => onLoginTypeChange(loginType === 1 ? 2 : 1)}
-      className="text-primary hover:text-primary/80 px-2"
-    >
-      {loginType === 1 ? (
-        <MessageSquareCode className="h-4 w-4 mr-2" />
-      ) : (
-        <KeyRound className="h-4 w-4 mr-2" />
-      )}
-      {loginType === 1 ? t('useSmscode') : t('usePassword')}
-    </Button>
-  );
-};
-
 export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, loginType }: SignInFormProps) => {
   const { t } = useTranslation();
 
-  const passwordForm = useForm<z.infer<typeof passwordFormSchema>>({
+  const passwordForm = useForm<PasswordFormData>({
     resolver: zodResolver(passwordFormSchema),
     defaultValues: {
       mobile: '',
       password: '',
       agreement: false
-    }
+    },
+    mode: 'onSubmit'
   });
 
-  const smscodeForm = useForm<z.infer<typeof smscodeFormSchema>>({
+  const smscodeForm = useForm<SMSCodeFormData>({
     resolver: zodResolver(smscodeFormSchema),
     defaultValues: {
       mobile: '',
       smscode: '',
       agreement: false
-    }
+    },
+    mode: 'onSubmit'
   });
 
   // Sync mobile number between forms
@@ -92,9 +49,9 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
     
     if (currentMobile) {
       if (loginType === 1) {
-        smscodeForm.setValue('mobile', currentMobile);
+        smscodeForm.setValue('mobile', currentMobile, { shouldValidate: false });
       } else {
-        passwordForm.setValue('mobile', currentMobile);
+        passwordForm.setValue('mobile', currentMobile, { shouldValidate: false });
       }
     }
   }, [loginType]);
@@ -102,9 +59,9 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
   // Only reset the password/smscode field when switching
   React.useEffect(() => {
     if (loginType === 1) {
-      smscodeForm.setValue('smscode', '');
+      smscodeForm.setValue('smscode', '', { shouldValidate: false });
     } else {
-      passwordForm.setValue('password', '');
+      passwordForm.setValue('password', '', { shouldValidate: false });
     }
   }, [loginType]);
 
