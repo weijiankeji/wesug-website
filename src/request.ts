@@ -1,12 +1,20 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 
-// 创建axios实例
+// Function to determine if we're in Lovable environment
+const isLovableEnvironment = () => {
+  const hostname = window.location.hostname;
+  return hostname.includes('lovable.dev') || hostname === 'localhost';
+};
+
+// Create axios instance with dynamic baseURL
 const instance: AxiosInstance = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://api.wesug.cn', // 你的API基础URL
-  timeout: 10000, // 请求超时时间
+  baseURL: isLovableEnvironment() 
+    ? 'https://api.wesug.cn' 
+    : (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://api.wesug.cn'),
+  timeout: 10000,
 });
 
-// 请求拦截器
+// Request interceptors
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig<unknown>) => {
     const userInfo = JSON.parse(localStorage.getItem('user-info') || '{}');
@@ -21,10 +29,10 @@ instance.interceptors.request.use(
   }
 );
 
-// 响应拦截器
+// Response interceptors
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
-    // 检查是否需要存储token
+    // Check if token needs to be stored
     if (response.config.url === '/user/login' || response.config.url === '/refreshToken') {
       const { accessToken, refreshToken } = response.data;
       localStorage.setItem('user-info', JSON.stringify({ accessToken, refreshToken }));
@@ -37,7 +45,7 @@ instance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        // 刷新token
+        // Refresh token
         const userInfo = JSON.parse(localStorage.getItem('user-info') || '{}');
         const refreshToken = userInfo.refreshToken;
         if (refreshToken) {
@@ -45,16 +53,16 @@ instance.interceptors.response.use(
           const { accessToken, refreshToken: newRefreshToken } = res.data;
           localStorage.setItem('user-info', JSON.stringify({ accessToken, refreshToken: newRefreshToken }));
 
-          // 重新设置请求头
+          // Reset request headers
           originalRequest.headers!.Authorization = `Bearer ${accessToken}`;
 
-          // 重新发起请求
+          // Re-initiate request
           return instance(originalRequest);
         }
       } catch (refreshError) {
-        // 处理刷新token失败的情况
+        // Handle refresh token failure
         console.error('Failed to refresh token:', refreshError);
-        // 可以在这里跳转到登录页面或提示用户重新登录
+        // Handle user redirecting to login or other actions here
       }
     }
 
@@ -62,7 +70,7 @@ instance.interceptors.response.use(
   }
 );
 
-// 封装通用的request方法
+// Encapsulate a general request method
 export const request = (method: 'GET' | 'POST', url: string, data?: any) => {
   return instance({
     method,
@@ -71,5 +79,5 @@ export const request = (method: 'GET' | 'POST', url: string, data?: any) => {
   });
 };
 
-// 导出axios实例
+// Export axios instance
 export default instance;
