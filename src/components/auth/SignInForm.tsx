@@ -82,10 +82,10 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
 
   // Sync mobile number between forms
   React.useEffect(() => {
-    const currentMobile = loginType === 1 
-      ? passwordForm.watch('mobile') 
+    const currentMobile = loginType === 1
+      ? passwordForm.watch('mobile')
       : smscodeForm.watch('mobile');
-    
+
     if (currentMobile) {
       if (loginType === 1) {
         smscodeForm.setValue('mobile', currentMobile);
@@ -138,6 +138,7 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
 
           {loginType === 1 ? (
             <FormField
+              key="password-form-item"
               control={passwordForm.control}
               name="password"
               render={({ field }) => (
@@ -152,6 +153,7 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
             />
           ) : (
             <FormField
+              key="smscode-form-item"
               control={smscodeForm.control}
               name="smscode"
               render={({ field }) => (

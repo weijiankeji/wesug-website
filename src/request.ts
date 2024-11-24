@@ -4,15 +4,12 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 
 const isLovableEnvironment = () => {
   const hostname = window.location.hostname;
   return hostname.includes('lovable.dev') || 
-         hostname.includes('lovableproject.com') || 
-         hostname === 'localhost';
+         hostname.includes('lovableproject.com')
 };
 
 // Create axios instance with dynamic baseURL
 const instance: AxiosInstance = axios.create({
-  baseURL: isLovableEnvironment() 
-    ? 'https://api.wesug.cn' 
-    : (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://api.wesug.cn'),
+  baseURL: process.env.NODE_ENV === 'development' && !isLovableEnvironment()  ? 'http://localhost:3000' : 'https://api.wesug.cn',
   timeout: 10000,
 });
 
