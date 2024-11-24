@@ -137,6 +137,7 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
                     {t('agreeToTerms')} <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{t('terms')}</a> {t('and')} <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{t('privacy')}</a>
                   </Label>
                 </div>
+                <FormMessage />
               </FormItem>
             )}
           />

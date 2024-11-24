@@ -8,7 +8,6 @@ import { Checkbox } from '../ui/checkbox';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useToast } from '../ui/use-toast';
 
 const formSchema = (t: any) => z.object({
   username: z.string().min(2, {
@@ -149,6 +148,7 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
                   {t('agreeToTerms')} <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{t('terms')}</a> {t('and')} <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{t('privacy')}</a>
                 </Label>
               </div>
+              <FormMessage />
             </FormItem>
           )}
         />
