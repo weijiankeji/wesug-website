@@ -11,7 +11,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { MessageSquareCode, KeyRound } from 'lucide-react';
 
 const passwordFormSchema = z.object({
-  mobile: z.string().min(11).max(11),
+  mobile: z.string().regex(/^1\d{10}$/, {
+    message: "Please enter a valid phone number"
+  }),
   password: z.string().min(6),
   agreement: z.boolean().refine((val) => val === true, {
     message: "You must agree to the terms and privacy policy"
@@ -19,7 +21,9 @@ const passwordFormSchema = z.object({
 });
 
 const smscodeFormSchema = z.object({
-  mobile: z.string().min(11).max(11),
+  mobile: z.string().regex(/^1\d{10}$/, {
+    message: "Please enter a valid phone number"
+  }),
   smscode: z.string().length(6),
   agreement: z.boolean().refine((val) => val === true, {
     message: "You must agree to the terms and privacy policy"
@@ -82,10 +86,10 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
 
   // Sync mobile number between forms
   React.useEffect(() => {
-    const currentMobile = loginType === 1
-      ? passwordForm.watch('mobile')
+    const currentMobile = loginType === 1 
+      ? passwordForm.watch('mobile') 
       : smscodeForm.watch('mobile');
-
+    
     if (currentMobile) {
       if (loginType === 1) {
         smscodeForm.setValue('mobile', currentMobile);
