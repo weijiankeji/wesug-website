@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
@@ -83,6 +83,7 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
 
           {loginType === 1 ? (
             <FormField
+              key="password-field"
               control={form.control}
               name="password"
               render={({ field }) => (
@@ -97,6 +98,7 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
             />
           ) : (
             <FormField
+              key="smscode-field"
               control={form.control}
               name="smscode"
               render={({ field }) => (
