@@ -36,7 +36,7 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: '',
-      phone: '',
+      mobile: '', // Changed from 'phone' to 'mobile'
       password: '',
       password1: '',
       smscode: '',
