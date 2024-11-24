@@ -43,25 +43,29 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
 
   // Sync mobile and agreement between forms when login type changes
   React.useEffect(() => {
-    const currentForm = loginType === 1 ? passwordForm : smscodeForm;
-    const otherForm = loginType === 1 ? smscodeForm : passwordForm;
-    
-    const values = currentForm.getValues();
-    otherForm.setValue('mobile', values.mobile, { shouldValidate: true });
-    otherForm.setValue('agreement', values.agreement, { shouldValidate: true });
+    if (loginType === 1) {
+      const values = passwordForm.getValues();
+      smscodeForm.setValue('mobile', values.mobile);
+      smscodeForm.setValue('agreement', values.agreement);
+    } else {
+      const values = smscodeForm.getValues();
+      passwordForm.setValue('mobile', values.mobile);
+      passwordForm.setValue('agreement', values.agreement);
+    }
   }, [loginType, passwordForm, smscodeForm]);
 
   const isMobileValid = React.useMemo(() => {
-    const currentForm = loginType === 1 ? passwordForm : smscodeForm;
-    const mobile = currentForm.getValues('mobile');
+    const mobile = loginType === 1 
+      ? passwordForm.getValues('mobile')
+      : smscodeForm.getValues('mobile');
     return /^1\d{10}$/.test(mobile);
   }, [loginType, passwordForm, smscodeForm]);
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: PasswordFormData | SMSCodeFormData) => {
     onSubmit({
       ...values,
       loginType,
-      ...(values.smscode && { smscode: Number(values.smscode) })
+      ...(('smscode' in values) && { smscode: Number(values.smscode) })
     });
   };
 
