@@ -80,12 +80,27 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
     }
   });
 
-  // Reset forms when switching login type
+  // Sync mobile number between forms
+  React.useEffect(() => {
+    const currentMobile = loginType === 1 
+      ? passwordForm.watch('mobile') 
+      : smscodeForm.watch('mobile');
+    
+    if (currentMobile) {
+      if (loginType === 1) {
+        smscodeForm.setValue('mobile', currentMobile);
+      } else {
+        passwordForm.setValue('mobile', currentMobile);
+      }
+    }
+  }, [loginType]);
+
+  // Only reset the password/smscode field when switching
   React.useEffect(() => {
     if (loginType === 1) {
-      smscodeForm.reset();
+      smscodeForm.setValue('smscode', '');
     } else {
-      passwordForm.reset();
+      passwordForm.setValue('password', '');
     }
   }, [loginType]);
 
@@ -97,7 +112,6 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
     onSubmit({
       ...values,
       loginType,
-      // Convert smscode to number if present
       ...(values.smscode && { smscode: Number(values.smscode) })
     });
   };
