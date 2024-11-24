@@ -8,7 +8,20 @@ import { Checkbox } from '../ui/checkbox';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginTypeSwitch } from './LoginTypeSwitch';
-import { passwordFormSchema, smscodeFormSchema, PasswordFormData, SMSCodeFormData } from './formSchemas';
+import { z } from 'zod';
+
+const formSchema = z.object({
+  mobile: z.string().regex(/^1\d{10}$/, {
+    message: "Please enter a valid phone number"
+  }),
+  password: z.string().min(6).optional(),
+  smscode: z.string().length(6).optional(),
+  agreement: z.boolean().refine((val) => val === true, {
+    message: "You must agree to the terms and privacy policy"
+  })
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 interface SignInFormProps {
   onSubmit: (values: any) => void;
@@ -21,62 +34,37 @@ interface SignInFormProps {
 export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, loginType }: SignInFormProps) => {
   const { t } = useTranslation();
 
-  const passwordForm = useForm<PasswordFormData>({
-    resolver: zodResolver(passwordFormSchema),
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       mobile: '',
       password: '',
-      agreement: false
-    },
-    mode: 'onChange'
-  });
-
-  const smscodeForm = useForm<SMSCodeFormData>({
-    resolver: zodResolver(smscodeFormSchema),
-    defaultValues: {
-      mobile: '',
       smscode: '',
       agreement: false
     },
     mode: 'onChange'
   });
 
-  // Sync mobile and agreement between forms when login type changes
-  React.useEffect(() => {
-    if (loginType === 1) {
-      const values = passwordForm.getValues();
-      smscodeForm.setValue('mobile', values.mobile, { shouldValidate: true });
-      smscodeForm.setValue('agreement', values.agreement, { shouldValidate: true });
-    } else {
-      const values = smscodeForm.getValues();
-      passwordForm.setValue('mobile', values.mobile, { shouldValidate: true });
-      passwordForm.setValue('agreement', values.agreement, { shouldValidate: true });
-    }
-  }, [loginType, passwordForm, smscodeForm]);
-
   const isMobileValid = React.useMemo(() => {
-    const mobile = loginType === 1 
-      ? passwordForm.watch('mobile')
-      : smscodeForm.watch('mobile');
+    const mobile = form.watch('mobile');
     return /^1\d{10}$/.test(mobile);
-  }, [loginType, passwordForm, smscodeForm]);
+  }, [form]);
 
-  const handleSubmit = (values: PasswordFormData | SMSCodeFormData) => {
+  const handleSubmit = (values: FormData) => {
     onSubmit({
-      ...values,
+      mobile: values.mobile,
+      ...(loginType === 1 ? { password: values.password } : { smscode: Number(values.smscode) }),
       loginType,
-      ...(('smscode' in values) && { smscode: Number(values.smscode) })
+      agreement: values.agreement
     });
   };
 
-  const currentForm = loginType === 1 ? passwordForm : smscodeForm;
-
   return (
     <div className="space-y-4">
-      <Form {...currentForm}>
-        <form onSubmit={currentForm.handleSubmit(handleSubmit)} className="space-y-4">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <FormField
-            control={currentForm.control}
+            control={form.control}
             name="mobile"
             render={({ field }) => (
               <FormItem>
@@ -91,8 +79,7 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
 
           {loginType === 1 ? (
             <FormField
-              key="password-form-item"
-              control={passwordForm.control}
+              control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
@@ -106,8 +93,7 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
             />
           ) : (
             <FormField
-              key="smscode-form-item"
-              control={smscodeForm.control}
+              control={form.control}
               name="smscode"
               render={({ field }) => (
                 <FormItem>
@@ -133,7 +119,7 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
           )}
 
           <FormField
-            control={currentForm.control}
+            control={form.control}
             name="agreement"
             render={({ field }) => (
               <FormItem className="flex flex-row items-start space-x-3 space-y-0">
