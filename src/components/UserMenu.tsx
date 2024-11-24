@@ -10,28 +10,54 @@ import { Avatar, AvatarFallback } from './ui/avatar';
 import { LogIn, LogOut, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { LoginDialog } from './LoginDialog';
+import { request } from '@/request';
 
 // Mock user state (replace with real authentication later)
 const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [user, setUser] = React.useState<{ name: string; phone: string } | null>(null);
+  const [user, setUser] = React.useState<{ username: string; } | null>(null);
 
-  const login = (phone: string) => {
-    setIsLoggedIn(true);
-    setUser({ name: `User ${phone.slice(-4)}`, phone });
+  const login = (data: {
+    mobile: string;
+    password?: string;
+    smscode?: number;
+    loginType: 1 | 2;
+  }) => {
+    request('POST', '/user/login', data).then((res) => {
+      if (res.data.success) {
+        setIsLoggedIn(true);
+        setUser(res.data);
+      }
+    });
   };
+
+  const register = (data: {
+    mobile: string;
+    password: string;
+    password1: string;
+    smscode: number;
+    username: string
+  }) => {
+    request('POST', '/user/register', data).then((res) => {
+      if (res.data.success) {
+        setIsLoggedIn(true);
+        setUser(res.data);
+      }
+    });
+  }
 
   const logout = () => {
     setIsLoggedIn(false);
     setUser(null);
+    localStorage.removeItem('user-info');
   };
 
-  return { isLoggedIn, user, login, logout };
+  return { isLoggedIn, user, login, register, logout };
 };
 
 export const UserMenu = () => {
   const { t } = useTranslation();
-  const { isLoggedIn, user, login, logout } = useAuth();
+  const { isLoggedIn, user, login, register, logout } = useAuth();
   const [showLoginDialog, setShowLoginDialog] = React.useState(false);
 
   if (!isLoggedIn) {
@@ -50,6 +76,7 @@ export const UserMenu = () => {
           open={showLoginDialog}
           onOpenChange={setShowLoginDialog}
           onLogin={login}
+          onRegister={register}
         />
       </>
     );
@@ -64,7 +91,7 @@ export const UserMenu = () => {
               <User className="h-4 w-4" />
             </AvatarFallback>
           </Avatar>
-          <span>{user?.name}</span>
+          <span>{user?.username}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

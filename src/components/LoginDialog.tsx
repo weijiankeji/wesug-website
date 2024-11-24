@@ -8,15 +8,27 @@ import { SignUpForm } from './auth/SignUpForm';
 interface LoginDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onLogin: (phone: string) => void;
+  onLogin: (data: {
+    mobile: string;
+    password?: string;
+    smscode?: number;
+    loginType: 1 | 2;
+  }) => void;
+  onRegister: (data: {
+    mobile: string;
+    password: string;
+    password1: string;
+    smscode: number;
+    username: string
+  }) => void;
 }
 
-export const LoginDialog = ({ open, onOpenChange, onLogin }: LoginDialogProps) => {
+export const LoginDialog = ({ open, onOpenChange, onLogin, onRegister }: LoginDialogProps) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const [countdown, setCountdown] = React.useState(0);
   const [mode, setMode] = React.useState<'signin' | 'signup'>('signin');
-  const [loginType, setLoginType] = React.useState<'password' | 'otp'>('password');
+  const [loginType, setLoginType] = React.useState<1 | 2>(1);
 
   const startCountdown = () => {
     setCountdown(60);
@@ -38,14 +50,12 @@ export const LoginDialog = ({ open, onOpenChange, onLogin }: LoginDialogProps) =
     startCountdown();
   };
 
-  const handleSignIn = (values: any) => {
-    onLogin(values.phone);
-    onOpenChange(false);
+  const handleSignIn = (values) => {
+    onLogin({ ...values, loginType });
   };
 
-  const handleSignUp = (values: any) => {
-    onLogin(values.phone);
-    onOpenChange(false);
+  const handleSignUp = (values) => {
+    onRegister(values);
   };
 
   return (

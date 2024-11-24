@@ -10,17 +10,17 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const formSchema = z.object({
-  name: z.string().min(2),
-  phone: z.string().min(11).max(11),
+  username: z.string().min(2),
+  mobile: z.string().min(11).max(11),
   password: z.string().min(6),
-  confirmPassword: z.string().min(6),
-  otp: z.string().length(6),
+  password1: z.string().min(6),
+  smscode: z.string().length(6),
   agreement: z.boolean().refine((val) => val === true, {
     message: "You must agree to the terms and privacy policy"
   })
-}).refine((data) => data.password === data.confirmPassword, {
+}).refine((data) => data.password === data.password1, {
   message: "Passwords don't match",
-  path: ["confirmPassword"],
+  path: ["password1"],
 });
 
 interface SignUpFormProps {
@@ -35,26 +35,26 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
+      username: '',
       phone: '',
       password: '',
-      confirmPassword: '',
-      otp: '',
+      password1: '',
+      smscode: '',
       agreement: false
     }
   });
 
-  const isPhoneValid = form.watch('phone')?.length === 11;
+  const isPhoneValid = form.watch('mobile')?.length === 11;
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="name"
+          name="username"
           render={({ field }) => (
             <FormItem>
-              <Label>{t('name')}</Label>
+              <Label>{t('username')}</Label>
               <FormControl>
                 <Input placeholder={t('enterName')} {...field} />
               </FormControl>
@@ -64,7 +64,7 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
         />
         <FormField
           control={form.control}
-          name="phone"
+          name="mobile"
           render={({ field }) => (
             <FormItem>
               <Label>{t('phoneNumber')}</Label>
@@ -77,7 +77,7 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
         />
         <FormField
           control={form.control}
-          name="otp"
+          name="smscode"
           render={({ field }) => (
             <FormItem>
               <Label>{t('verificationCode')}</Label>
@@ -85,9 +85,9 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
-                <Button 
-                  type="button" 
-                  onClick={onGetCode} 
+                <Button
+                  type="button"
+                  onClick={onGetCode}
                   disabled={!isPhoneValid || countdown > 0}
                   className="whitespace-nowrap"
                 >
@@ -113,10 +113,10 @@ export const SignUpForm = ({ onSubmit, countdown, onGetCode, onModeChange }: Sig
         />
         <FormField
           control={form.control}
-          name="confirmPassword"
+          name="password1"
           render={({ field }) => (
             <FormItem>
-              <Label>{t('confirmPassword')}</Label>
+              <Label>{t('password1')}</Label>
               <FormControl>
                 <Input type="password" {...field} />
               </FormControl>

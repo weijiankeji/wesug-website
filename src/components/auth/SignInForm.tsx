@@ -11,32 +11,32 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { MessageSquareCode, KeyRound } from 'lucide-react';
 
 const passwordFormSchema = z.object({
-  phone: z.string().min(11).max(11),
+  mobile: z.string().min(11).max(11),
   password: z.string().min(6),
   agreement: z.boolean().refine((val) => val === true, {
     message: "You must agree to the terms and privacy policy"
   })
 });
 
-const otpFormSchema = z.object({
-  phone: z.string().min(11).max(11),
-  otp: z.string().length(6),
+const smscodeFormSchema = z.object({
+  mobile: z.string().min(11).max(11),
+  smscode: z.string().length(6),
   agreement: z.boolean().refine((val) => val === true, {
     message: "You must agree to the terms and privacy policy"
   })
 });
 
 interface SignInFormProps {
-  onSubmit: (values: any) => void;
+  onSubmit: (values) => void;
   countdown: number;
   onGetCode: () => void;
   onModeChange: () => void;
-  loginType: 'password' | 'otp';
+  loginType: 1 | 2;
 }
 
 interface LoginTypeSwitchProps {
-  loginType: 'password' | 'otp';
-  onLoginTypeChange: (type: 'password' | 'otp') => void;
+  loginType: 1 | 2;
+  onLoginTypeChange: (type: 1 | 2) => void;
 }
 
 const LoginTypeSwitch = ({ loginType, onLoginTypeChange }: LoginTypeSwitchProps) => {
@@ -46,49 +46,49 @@ const LoginTypeSwitch = ({ loginType, onLoginTypeChange }: LoginTypeSwitchProps)
     <Button
       variant="ghost"
       size="sm"
-      onClick={() => onLoginTypeChange(loginType === 'password' ? 'otp' : 'password')}
+      onClick={() => onLoginTypeChange(loginType === 1 ? 2 : 1)}
       className="text-primary hover:text-primary/80 px-2"
     >
-      {loginType === 'password' ? (
+      {loginType === 1 ? (
         <MessageSquareCode className="h-4 w-4 mr-2" />
       ) : (
         <KeyRound className="h-4 w-4 mr-2" />
       )}
-      {loginType === 'password' ? t('useOtp') : t('usePassword')}
+      {loginType === 1 ? t('useSmscode') : t('usePassword')}
     </Button>
   );
 };
 
 export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, loginType }: SignInFormProps) => {
   const { t } = useTranslation();
-  
+
   const passwordForm = useForm<z.infer<typeof passwordFormSchema>>({
     resolver: zodResolver(passwordFormSchema),
     defaultValues: {
-      phone: '',
+      mobile: '',
       password: '',
       agreement: false
     }
   });
 
-  const otpForm = useForm<z.infer<typeof otpFormSchema>>({
-    resolver: zodResolver(otpFormSchema),
+  const smscodeForm = useForm<z.infer<typeof smscodeFormSchema>>({
+    resolver: zodResolver(smscodeFormSchema),
     defaultValues: {
-      phone: '',
-      otp: '',
+      mobile: '',
+      smscode: '',
       agreement: false
     }
   });
 
-  const isPhoneValid = loginType === 'password' 
-    ? passwordForm.watch('phone')?.length === 11 
-    : otpForm.watch('phone')?.length === 11;
+  const isMobileValid = loginType === 1
+    ? passwordForm.watch('mobile')?.length === 11
+    : smscodeForm.watch('mobile')?.length === 11;
 
-  const handleSubmit = loginType === 'password' 
-    ? passwordForm.handleSubmit(onSubmit) 
-    : otpForm.handleSubmit(onSubmit);
+  const handleSubmit = loginType === 1
+    ? passwordForm.handleSubmit(onSubmit)
+    : smscodeForm.handleSubmit(onSubmit);
 
-  const currentForm = loginType === 'password' ? passwordForm : otpForm;
+  const currentForm = loginType === 1 ? passwordForm : smscodeForm;
 
   return (
     <div className="space-y-4">
@@ -96,19 +96,19 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
         <form onSubmit={handleSubmit} className="space-y-4">
           <FormField
             control={currentForm.control}
-            name="phone"
+            name="mobile"
             render={({ field }) => (
               <FormItem>
                 <Label>{t('phoneNumber')}</Label>
                 <FormControl>
-                  <Input placeholder="1xxxxxxxxxx" {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          {loginType === 'password' ? (
+          {loginType === 1 ? (
             <FormField
               control={passwordForm.control}
               name="password"
@@ -124,8 +124,8 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
             />
           ) : (
             <FormField
-              control={otpForm.control}
-              name="otp"
+              control={smscodeForm.control}
+              name="smscode"
               render={({ field }) => (
                 <FormItem>
                   <Label>{t('verificationCode')}</Label>
@@ -133,10 +133,10 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
-                    <Button 
-                      type="button" 
-                      onClick={onGetCode} 
-                      disabled={!isPhoneValid || countdown > 0}
+                    <Button
+                      type="button"
+                      onClick={onGetCode}
+                      disabled={!isMobileValid || countdown > 0}
                       variant="outline"
                       className="shrink-0 min-w-[4rem] h-10"
                     >
