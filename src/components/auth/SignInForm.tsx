@@ -42,12 +42,18 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
     resolver: zodResolver(formSchema(t)),
     defaultValues: {
       mobile: '',
-      password: '',
-      smscode: '',
+      password: undefined,
+      smscode: undefined,
       agreement: false
     },
     mode: 'onChange'
   });
+
+  // Reset password/smscode when loginType changes
+  React.useEffect(() => {
+    form.setValue('password', undefined, { shouldValidate: false });
+    form.setValue('smscode', undefined, { shouldValidate: false });
+  }, [loginType, form]);
 
   const isMobileValid = React.useMemo(() => {
     const mobile = form.watch('mobile');
@@ -90,7 +96,12 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
                 <FormItem>
                   <Label>{t('password')}</Label>
                   <FormControl>
-                    <Input type="password" placeholder={t('enterPassword')} {...field} />
+                    <Input 
+                      type="password" 
+                      placeholder={t('enterPassword')} 
+                      {...field} 
+                      value={field.value || ''} 
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -106,7 +117,11 @@ export const SignInForm = ({ onSubmit, countdown, onGetCode, onModeChange, login
                   <Label>{t('verificationCode')}</Label>
                   <div className="flex gap-2">
                     <FormControl>
-                      <Input placeholder={t('enterCode')} {...field} />
+                      <Input 
+                        placeholder={t('enterCode')} 
+                        {...field} 
+                        value={field.value || ''} 
+                      />
                     </FormControl>
                     <Button
                       type="button"
