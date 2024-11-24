@@ -3,7 +3,9 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 
 // Function to determine if we're in Lovable environment
 const isLovableEnvironment = () => {
   const hostname = window.location.hostname;
-  return hostname.includes('lovable.dev') || hostname === 'localhost';
+  return hostname.includes('lovable.dev') || 
+         hostname.includes('lovableproject.com') || 
+         hostname === 'localhost';
 };
 
 // Create axios instance with dynamic baseURL
