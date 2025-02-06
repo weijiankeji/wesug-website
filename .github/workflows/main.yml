@@ -28,7 +28,7 @@ jobs:
       env:
         SECRET_ID: ${{ secrets.SecretId }}
         SECRET_KEY: ${{ secrets.SecretKey }}
-        BUCKET: deploy-1251567719/
+        BUCKET: deploy-1251567719
         REGION: ap-beijing
       run: coscmd config -a $SECRET_ID -s $SECRET_KEY -b $BUCKET -r $REGION
     - name: Delete current
