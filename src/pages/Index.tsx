@@ -161,7 +161,7 @@ const Index = () => {
           <div className="grid grid-cols-1 gap-8">
             <div className="text-left">  {/* Changed from text-center to text-left */}
               <h3 className="text-white text-lg font-semibold mb-4">{t('contact')}</h3>
-              <p className="text-sm">Email: windyrain1994@163.com</p>
+              <p className="text-sm">Email: admin@wesug.cn</p>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
