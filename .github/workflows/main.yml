@@ -31,7 +31,5 @@ jobs:
         BUCKET: wesug-1251567719
         REGION: ap-beijing
       run: coscmd config -a $SECRET_ID -s $SECRET_KEY -b $BUCKET -r $REGION
-    - name: Delete current
-      run: coscmd delete -rf /
     - name: Upload
       run: coscmd upload -r ./dist/ /
