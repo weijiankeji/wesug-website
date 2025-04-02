@@ -97,7 +97,7 @@ const Index = () => {
                     <h3 className="text-xl font-semibold mb-4">Ant Design Pro 后台模板一键生成</h3>
                     <div className="flex space-x-6 mb-4">
                       <a
-                        href="https://juejin.cn/"
+                        href="https://juejin.cn/spost/7488529389338673204"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-sm text-gray-500 hover:text-primary transition-colors flex items-center"
@@ -106,7 +106,7 @@ const Index = () => {
                         文章介绍
                       </a>
                       <a
-                        href="https://www.bilibili.com/"
+                        href="https://www.bilibili.com/video/BV1PcfMYHE95/?vd_source=21fc071576e0c6a54d3912b89ce741fd"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-sm text-gray-500 hover:text-primary transition-colors flex items-center"
