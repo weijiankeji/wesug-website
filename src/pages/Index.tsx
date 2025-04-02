@@ -8,6 +8,7 @@ import { useRef } from 'react';
 import { useState } from 'react';
 import { FileImage, QrCode, Split } from 'lucide-react';
 import { download } from '@/request';
+import { isLogin } from '@/utils';
 
 const Index = () => {
   const { t, i18n } = useTranslation();
@@ -152,7 +153,8 @@ const Index = () => {
                       <Button
                         className="bg-primary hover:bg-primary/90 flex-1 mr-2"
                         onClick={() => {
-                          download('POST', '/wesug-website/noauth-download', {
+                          const url = isLogin() ? '/wesug-website/download' : '/wesug-website/noauth-download';
+                          download('POST', url, {
                             title: formData.title,
                             username: formData.username,
                             password: formData.password,
