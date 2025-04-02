@@ -97,7 +97,7 @@ const Index = () => {
                     <h3 className="text-xl font-semibold mb-4">Ant Design Pro 后台模板一键生成</h3>
                     <div className="flex space-x-6 mb-4">
                       <a
-                        href="https://juejin.cn/spost/7488529389338673204"
+                        href="https://juejin.cn/post/7488529389338673204"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-sm text-gray-500 hover:text-primary transition-colors flex items-center"
