@@ -7,10 +7,10 @@ const Logo = () => {
 
   return (
     <div className="flex items-center gap-2">
-      <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-        <Wrench className="w-5 h-5 text-white" />
+      <div className="h-16 rounded-lg flex items-center justify-center">
+        <img src={'/logo.png'} className="h-16 text-white" />
       </div>
-      <span className="font-bold text-xl text-primary">{t('companyName')}</span>
+      {/* <span className="font-bold text-xl text-primary">{t('companyName')}</span> */}
     </div>
   );
 };

@@ -1,21 +1,16 @@
 import React from 'react';
 import { Button } from './ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from './ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { LogIn, LogOut, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { LoginDialog } from './LoginDialog';
 import { request } from '@/request';
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from '@/hooks/use-toast';
 
 const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [user, setUser] = React.useState<{ username: string; } | null>(null);
+  const [user, setUser] = React.useState<{ username: string } | null>(null);
   const { toast } = useToast();
   const { t } = useTranslation();
 
@@ -27,46 +22,39 @@ const useAuth = () => {
     }
   }, []);
 
-  const login = (data: {
-    mobile: string;
-    password?: string;
-    smscode?: number;
-    loginType: 1 | 2;
-  }) => {
-    request('POST', '/user/login', data).then((res) => {
-      if (res.data.success) {
-        setIsLoggedIn(true);
-        setUser({ username: res.data.username });
-      }
-    }).catch((error) => {
-      toast({
-        variant: "destructive",
-        title: t("loginError"),
-        description: error.response?.data?.message || t("unknownError")
+  const login = (data: { mobile: string; password?: string; smscode?: number; loginType: 1 | 2 }) => {
+    request('POST', '/user/login', { ...data, channel: 'wesug-website' })
+      .then((res) => {
+        if (res.data.success) {
+          setIsLoggedIn(true);
+          setUser({ username: res.data.username });
+        }
+      })
+      .catch((error) => {
+        toast({
+          variant: 'destructive',
+          title: t('loginError'),
+          description: error.response?.data?.message || t('unknownError'),
+        });
       });
-    });
   };
 
-  const register = (data: {
-    mobile: string;
-    password: string;
-    password1: string;
-    smscode: number;
-    username: string
-  }) => {
-    request('POST', '/user/register', data).then((res) => {
-      if (res.data.success) {
-        setIsLoggedIn(true);
-        setUser({ username: res.data.username });
-      }
-    }).catch((error) => {
-      toast({
-        variant: "destructive",
-        title: t("registerError"),
-        description: error.response?.data?.message || t("unknownError")
+  const register = (data: { mobile: string; password: string; password1: string; smscode: number; username: string }) => {
+    request('POST', '/user/register', { ...data, channel: 'wesug-website' })
+      .then((res) => {
+        if (res.data.success) {
+          setIsLoggedIn(true);
+          setUser({ username: res.data.username });
+        }
+      })
+      .catch((error) => {
+        toast({
+          variant: 'destructive',
+          title: t('registerError'),
+          description: error.response?.data?.message || t('unknownError'),
+        });
       });
-    });
-  }
+  };
 
   const logout = () => {
     setIsLoggedIn(false);
@@ -85,23 +73,11 @@ export const UserMenu = () => {
   if (!isLoggedIn) {
     return (
       <>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setShowLoginDialog(true)}
-          className="flex items-center gap-2"
-        >
+        <Button variant="ghost" size="sm" onClick={() => setShowLoginDialog(true)} className="flex items-center gap-2">
           <LogIn className="h-4 w-4" />
           {t('login')}
         </Button>
-        {showLoginDialog && (
-          <LoginDialog
-            open={showLoginDialog}
-            onOpenChange={setShowLoginDialog}
-            onLogin={login}
-            onRegister={register}
-          />
-        )}
+        {showLoginDialog && <LoginDialog open={showLoginDialog} onOpenChange={setShowLoginDialog} onLogin={login} onRegister={register} />}
       </>
     );
   }

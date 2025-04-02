@@ -3,13 +3,12 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 
 // Function to determine if we're in Lovable environment
 const isLovableEnvironment = () => {
   const hostname = window.location.hostname;
-  return hostname.includes('lovable.dev') || 
-         hostname.includes('lovableproject.com')
+  return hostname.includes('lovable.dev') || hostname.includes('lovableproject.com');
 };
 
 // Create axios instance with dynamic baseURL
 const instance: AxiosInstance = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' && !isLovableEnvironment()  ? 'http://localhost:3000' : 'https://api.wesug.cn',
+  baseURL: process.env.NODE_ENV === 'development' && !isLovableEnvironment() ? 'http://localhost:3000' : 'https://api.wesug.cn',
   timeout: 10000,
 });
 
@@ -38,11 +37,14 @@ instance.interceptors.response.use(
     } else if (response.config.url === '/refreshToken') {
       const userInfo = JSON.parse(localStorage.getItem('user-info') || '{}');
       const { accessToken, refreshToken } = response.data;
-      localStorage.setItem('user-info', JSON.stringify({ 
-        ...userInfo,
-        accessToken, 
-        refreshToken 
-      }));
+      localStorage.setItem(
+        'user-info',
+        JSON.stringify({
+          ...userInfo,
+          accessToken,
+          refreshToken,
+        })
+      );
     }
     return response;
   },
@@ -58,11 +60,14 @@ instance.interceptors.response.use(
         if (refreshToken) {
           const res = await instance.post('/refreshToken', { refreshToken });
           const { accessToken, refreshToken: newRefreshToken } = res.data;
-          localStorage.setItem('user-info', JSON.stringify({ 
-            ...userInfo,
-            accessToken, 
-            refreshToken: newRefreshToken 
-          }));
+          localStorage.setItem(
+            'user-info',
+            JSON.stringify({
+              ...userInfo,
+              accessToken,
+              refreshToken: newRefreshToken,
+            })
+          );
 
           // Reset request headers
           originalRequest.headers!.Authorization = `Bearer ${accessToken}`;
@@ -87,6 +92,15 @@ export const request = (method: 'GET' | 'POST', url: string, data?: any) => {
     method,
     url,
     [method === 'GET' ? 'params' : 'data']: data,
+  });
+};
+
+export const download = (method: 'GET' | 'POST', url: string, data?: any) => {
+  return instance({
+    method,
+    url,
+    [method === 'GET' ? 'params' : 'data']: data,
+    responseType: 'blob',
   });
 };
 

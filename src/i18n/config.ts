@@ -16,7 +16,7 @@ i18n.use(initReactI18next).init({
         readyToStart: 'Ready to Start?',
         transformWorkflow: 'Transform your workflow today',
         tryNow: 'Try Now',
-        bannerText: 'Committed to providing high-quality, efficient and secure tool services for individuals and enterprises, such as document/image processing, format conversion, etc.',
+        bannerText: 'Committed to providing high-quality, efficient and secure software services',
         contact: 'Contact',
         followUs: 'Follow Us',
         rights: 'All rights reserved',
@@ -69,17 +69,17 @@ i18n.use(initReactI18next).init({
         passwordLogin: 'Password Login',
         otpLogin: 'SMS Code Login',
         noAccount: "Don't have an account?",
-        haveAccount: "Already have an account?",
-        usePassword: "Use Password",
-        useSmscode: "Use SMS Code",
+        haveAccount: 'Already have an account?',
+        usePassword: 'Use Password',
+        useSmscode: 'Use SMS Code',
         // Validation messages
         invalidPhone: 'Please enter a valid phone number',
         invalidCode: 'Please enter a valid verification code',
         passwordMinLength: 'Password must be at least 6 characters',
         usernameMinLength: 'Username must be at least 2 characters',
         passwordsNotMatch: "Passwords don't match",
-        agreementRequired: 'You must agree to the terms and privacy policy'
-      }
+        agreementRequired: 'You must agree to the terms and privacy policy',
+      },
     },
     zh: {
       translation: {
@@ -92,7 +92,7 @@ i18n.use(initReactI18next).init({
         readyToStart: '准备开始？',
         transformWorkflow: '今天就改变您的工作流程',
         tryNow: '立即尝试',
-        bannerText: '致力于为个人和企业提供高质量、高效且安全的工具服务，如文档/图像处理、格式转换等。',
+        bannerText: '致力于提供高质量、高效且安全的软件服务。',
         contact: '联系我们',
         followUs: '关注我们',
         rights: '版权所有',
@@ -154,13 +154,13 @@ i18n.use(initReactI18next).init({
         passwordMinLength: '密码至少需要6个字符',
         usernameMinLength: '用户名至少需要2个字符',
         passwordsNotMatch: '两次输入的密码不一致',
-        agreementRequired: '请同意用户协议和隐私政策'
-      }
-    }
+        agreementRequired: '请同意用户协议和隐私政策',
+      },
+    },
   },
   interpolation: {
-    escapeValue: false
-  }
+    escapeValue: false,
+  },
 });
 
 export default i18n;
