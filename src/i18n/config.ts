@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 
 i18n.use(initReactI18next).init({
   fallbackLng: 'zh',
-  lng: 'zh',
+  lng: window.location.href.includes('lang=en') ? 'en' : 'zh',
   resources: {
     en: {
       translation: {
@@ -79,6 +79,22 @@ i18n.use(initReactI18next).init({
         usernameMinLength: 'Username must be at least 2 characters',
         passwordsNotMatch: "Passwords don't match",
         agreementRequired: 'You must agree to the terms and privacy policy',
+        // easy-ant-design-pro
+        easyAntDesignPro: 'Simplifying Ant Design Pro Template',
+        easyAntDesignProBlog: 'Blog',
+        easyAntDesignProVideo: 'Youtube',
+        easyAntDesignProTitle: 'CMS Title',
+        easyAntDesignProAdminUserName: 'Admin username',
+        easyAntDesignProAdminPassword: 'Admin password',
+        easyAntDesignProTitlePlaceholder: 'DefaultValue: XX-CMS',
+        easyAntDesignProAdminUserNamePlaceholder: 'Default value: admin',
+        easyAntDesignProAdminPasswordPlaceholder: 'Default value: 123456',
+        easyAntDesignProTitleDefaultValue: 'XX-CMS',
+        easyAntDesignProGenerateOnline: 'Generate online',
+        easyAntDesignProGetSourceCode: 'Get source code(open source is not easy, please give me a star)',
+        easyAntDesignProBlogUrl: '',
+        easyAntDesignProVideoUrl: '',
+        easyAntDesignProSourceCodeUrl: 'https://github.com/weijiankeji/easy-ant-design-pro',
       },
     },
     zh: {
@@ -155,6 +171,22 @@ i18n.use(initReactI18next).init({
         usernameMinLength: '用户名至少需要2个字符',
         passwordsNotMatch: '两次输入的密码不一致',
         agreementRequired: '请同意用户协议和隐私政策',
+        // easy-ant-design-pro
+        easyAntDesignPro: 'Ant Design Pro 模版简化工具',
+        easyAntDesignProBlog: '文章介绍',
+        easyAntDesignProVideo: '视频展示',
+        easyAntDesignProTitle: '管理系统标题',
+        easyAntDesignProAdminUserName: '管理员用户名',
+        easyAntDesignProAdminPassword: '管理员密码',
+        easyAntDesignProTitlePlaceholder: '默认标题: 后台管理系统',
+        easyAntDesignProAdminUserNamePlaceholder: '默认用户: admin',
+        easyAntDesignProAdminPasswordPlaceholder: '默认密码: 123456',
+        easyAntDesignProTitleDefaultValue: '后台管理系统',
+        easyAntDesignProGenerateOnline: '在线生成',
+        easyAntDesignProGetSourceCode: '获取源码（开源不易，给我的文章/源码点个赞吧）',
+        easyAntDesignProBlogUrl: 'https://juejin.cn/post/7488529389338673204',
+        easyAntDesignProVideoUrl: 'https://www.bilibili.com/video/BV1PcfMYHE95/?vd_source=21fc071576e0c6a54d3912b89ce741fd',
+        easyAntDesignProSourceCodeUrl: 'https://gitee.com/windyrain1994/easy-ant-design-pro',
       },
     },
   },

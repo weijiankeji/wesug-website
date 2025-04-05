@@ -16,9 +16,9 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState<'dev' | 'tools'>('dev');
   // 在组件顶部添加状态管理
   const [formData, setFormData] = useState({
-    title: '后台管理系统',
-    username: 'admin',
-    password: '123456',
+    title: '',
+    username: '',
+    password: '',
   });
 
   const scrollToServices = () => {
@@ -26,24 +26,6 @@ const Index = () => {
       behavior: 'smooth',
     });
   };
-
-  const features = [
-    {
-      icon: <Upload className="w-6 h-6" />,
-      title: t('easyUpload'),
-      description: t('uploadDescription'),
-    },
-    {
-      icon: <Download className="w-6 h-6" />,
-      title: t('fastProcessing'),
-      description: t('processingDescription'),
-    },
-    {
-      icon: <Cog className="w-6 h-6" />,
-      title: t('advancedTools'),
-      description: t('toolsDescription'),
-    },
-  ];
 
   return (
     <div className="min-h-screen">
@@ -94,56 +76,56 @@ const Index = () => {
               {activeTab === 'dev' && (
                 <div className="bg-white rounded-lg shadow-md overflow-hidden">
                   <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-4">Ant Design Pro 后台模板一键生成</h3>
-                    <div className="flex space-x-6 mb-4">
+                    <h3 className="text-xl font-semibold mb-4">{t('easyAntDesignPro')}</h3>
+                    <div className={`flex space-x-6 mb-4${i18n.language === 'en' ? ' hidden' : ''}`}>
                       <a
-                        href="https://juejin.cn/post/7488529389338673204"
+                        href={t('easyAntDesignProBlogUrl')}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-sm text-gray-500 hover:text-primary transition-colors flex items-center"
                       >
                         <FileImage className="w-4 h-4 mr-1" />
-                        文章介绍
+                        {t('easyAntDesignProBlog')}
                       </a>
                       <a
-                        href="https://www.bilibili.com/video/BV1PcfMYHE95/?vd_source=21fc071576e0c6a54d3912b89ce741fd"
+                        href={t('easyAntDesignProVideoUrl')}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-sm text-gray-500 hover:text-primary transition-colors flex items-center"
                       >
                         <Video className="w-4 h-4 mr-1" />
-                        视频展示
+                        {t('easyAntDesignProVideo')}
                       </a>
                     </div>
                     <div className="space-y-4 mb-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">管理系统标题</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t('easyAntDesignProTitle')}</label>
                         <input
                           type="text"
                           className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                          placeholder="默认标题：后台管理系统"
+                          placeholder={t('easyAntDesignProTitlePlaceholder')}
                           value={formData.title}
                           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">管理员用户名</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t('easyAntDesignProAdminUserName')}</label>
                         <input
                           type="text"
                           className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                          placeholder="默认用户：admin"
+                          placeholder={t('easyAntDesignProAdminUserNamePlaceholder')}
                           value={formData.username}
                           onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">管理员密码</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t('easyAntDesignProAdminPassword')}</label>
                         <input
                           type="password"
                           className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                          placeholder="默认密码：123456"
+                          placeholder={t('easyAntDesignProAdminPasswordPlaceholder')}
                           value={formData.password}
                           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                         />
@@ -158,6 +140,7 @@ const Index = () => {
                             title: formData.title,
                             username: formData.username,
                             password: formData.password,
+                            lang: i18n.language === 'en' ? 'en-US' : 'zh-CN',
                           }).then((res) => {
                             if (res.status === 200) {
                               const a = document.createElement('a');
@@ -168,16 +151,16 @@ const Index = () => {
                           });
                         }}
                       >
-                        在线生成
+                        {t('easyAntDesignProGenerateOnline')}
                       </Button>
                       <Button
                         variant="outline"
                         className="flex-1"
                         onClick={() => {
-                          window.open('https://gitee.com/windyrain1994/easy-ant-design-pro');
+                          window.open(t('easyAntDesignProSourceCodeUrl'));
                         }}
                       >
-                        获取源码（开源不易，给我的文章/源码点个赞吧）
+                        {t('easyAntDesignProGetSourceCode')}
                       </Button>
                     </div>
                   </div>
