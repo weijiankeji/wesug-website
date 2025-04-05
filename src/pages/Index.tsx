@@ -170,8 +170,14 @@ const Index = () => {
                       >
                         在线生成
                       </Button>
-                      <Button variant="outline" className="flex-1 hidden">
-                        <s className="decoration-slice">原价9.9</s>（1元限时折扣）获取源码
+                      <Button
+                        variant="outline"
+                        className="flex-1"
+                        onClick={() => {
+                          window.open('https://gitee.com/windyrain1994/easy-ant-design-pro');
+                        }}
+                      >
+                        获取源码（开源不易，给我的文章/源码点个赞吧）
                       </Button>
                     </div>
                   </div>
