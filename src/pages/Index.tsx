@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { FileImage, QrCode, Split } from 'lucide-react';
 import { download } from '@/request';
 import { isLogin } from '@/utils';
+import { PdfCombinerCard } from '@/components/tools/PdfCombinerCard';
 
 const Index = () => {
   const { t, i18n } = useTranslation();
@@ -63,18 +64,18 @@ const Index = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">{t('ourServices')}</h2>
 
           <div className="max-w-4xl mx-auto">
-            <div className="flex border-b border-gray-200 hidden">
+            <div className="flex border-b border-gray-200">
               <button
                 className={`px-6 py-3 font-medium ${activeTab === 'dev' ? 'text-primary border-b-2 border-primary' : 'text-gray-500'}`}
                 onClick={() => setActiveTab('dev')}
               >
-                开发效率
+                {t('tabDevelop')}
               </button>
               <button
                 className={`px-6 py-3 font-medium ${activeTab === 'tools' ? 'text-primary border-b-2 border-primary' : 'text-gray-500'}`}
                 onClick={() => setActiveTab('tools')}
               >
-                工具
+                {t('tabTools')}
               </button>
             </div>
 
@@ -201,20 +202,9 @@ const Index = () => {
               {activeTab === 'tools' && (
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                      <div className="p-6">
-                        <div className="flex items-center mb-4">
-                          <Split className="w-6 h-6 text-primary mr-3" />
-                          <h3 className="text-lg font-semibold">PDF拆分</h3>
-                        </div>
-                        <p className="text-gray-600 mb-4">将大型PDF文件按页面或内容拆分成多个小文件</p>
-                        <Button variant="outline" className="w-full">
-                          开始拆分
-                        </Button>
-                      </div>
-                    </div>
+                    <PdfCombinerCard />
 
-                    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    {/* <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                       <div className="p-6">
                         <div className="flex items-center mb-4">
                           <FileImage className="w-6 h-6 text-primary mr-3" />
@@ -238,7 +228,7 @@ const Index = () => {
                           生成二维码
                         </Button>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </>
               )}

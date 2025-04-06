@@ -96,6 +96,21 @@ i18n.use(initReactI18next).init({
         easyAntDesignProBlogUrl: 'https://medium.com/@windyrain1994/simplifying-ant-design-pro-template-dc6b97199f16',
         easyAntDesignProVideoUrl: 'https://www.youtube.com/watch?v=WKJjsP2Erq4',
         easyAntDesignProSourceCodeUrl: 'https://github.com/weijiankeji/easy-ant-design-pro',
+        // tab
+        tabDevelop: 'Develop Efficient',
+        tabTools: 'Tools',
+        // pdf Combiner
+        pdfCombinerTitle: 'PDF Combiner',
+        pdfCombinerDescription: 'Recombine subpages from PDF files freely',
+        tryIt: 'Try it',
+        pdfCombiner: {
+          uploadedFile: 'Uploaded file',
+          removeFromCombination: 'Remove from combination',
+          addToCombination: 'Add to combination',
+          combine: 'Combine',
+          reupload: 'Reupload',
+          exit: 'Exit',
+        },
       },
     },
     zh: {
@@ -189,6 +204,21 @@ i18n.use(initReactI18next).init({
         easyAntDesignProBlogUrl: 'https://juejin.cn/post/7488529389338673204',
         easyAntDesignProVideoUrl: 'https://www.bilibili.com/video/BV1PcfMYHE95/?vd_source=21fc071576e0c6a54d3912b89ce741fd',
         easyAntDesignProSourceCodeUrl: 'https://gitee.com/windyrain1994/easy-ant-design-pro',
+        // tab
+        tabDevelop: '开发效率',
+        tabTools: '工具',
+        // pdf 自由组合
+        pdfCombinerTitle: 'PDF自由组合',
+        pdfCombinerDescription: '将PDF文件中的子页面重新自由组合',
+        tryIt: '试一试',
+        pdfCombiner: {
+          uploadedFile: '已上传文件',
+          removeFromCombination: '从自由组合中移除',
+          addToCombination: '添加到自由组合',
+          combine: '自由组合',
+          reupload: '重新上传',
+          exit: '退出',
+        },
       },
     },
   },
