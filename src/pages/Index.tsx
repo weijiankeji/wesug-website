@@ -36,8 +36,12 @@ const Index = () => {
           <Logo />
           <div className="flex items-center space-x-2">
             <LanguageSwitch />
-            <div className="h-6 w-px bg-gray-200" />
-            <UserMenu />
+            {i18n.language !== 'en' && (
+              <>
+                <div className="h-6 w-px bg-gray-200" />
+                <UserMenu />
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -79,7 +83,7 @@ const Index = () => {
                 <div className="bg-white rounded-lg shadow-md overflow-hidden">
                   <div className="p-6">
                     <h3 className="text-xl font-semibold mb-4">{t('easyAntDesignPro')}</h3>
-                    <div className={`flex space-x-6 mb-4${i18n.language === 'en' ? ' hidden' : ''}`}>
+                    <div className="flex space-x-6 mb-4">
                       <a
                         href={t('easyAntDesignProBlogUrl')}
                         target="_blank"
