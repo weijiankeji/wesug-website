@@ -88,6 +88,13 @@ export const PdfCombinerCard = ({ onClick }: PdfCombinerCardProps) => {
     }
   };
 
+  const handleReset = () => {
+    setPdfFile(null);
+    setIsUploaded(false);
+    setFileName('');
+    setCombinedPages([]); // 重置自由组合序列
+  };
+
   // 修改PDF worker初始化部分
   useEffect(() => {
     if (isUploaded) {
@@ -209,8 +216,8 @@ export const PdfCombinerCard = ({ onClick }: PdfCombinerCardProps) => {
                   variant="outline"
                   className="text-gray-600 hover:bg-gray-100"
                   onClick={() => {
-                    setPdfFile(null);
-                    setIsUploaded(false);
+                    handleReset();
+                    setIsUploaded(false); // 仅重新上传，不退出
                   }}
                 >
                   <IconUpload className="w-4 h-4 mr-2" />
@@ -219,11 +226,7 @@ export const PdfCombinerCard = ({ onClick }: PdfCombinerCardProps) => {
                 <Button
                   variant="outline"
                   className="text-red-500 hover:bg-red-500 border-red-200 hover:border-red-300"
-                  onClick={() => {
-                    setPdfFile(null);
-                    setIsUploaded(false);
-                    setFileName('');
-                  }}
+                  onClick={handleReset}
                 >
                   <X className="w-4 h-4 mr-2" />
                   {t('pdfCombiner.exit')}
