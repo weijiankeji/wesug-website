@@ -4,12 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { LanguageSwitch } from '@/components/LanguageSwitch';
 import Logo from '@/components/Logo';
 import { UserMenu } from '@/components/UserMenu';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { FileImage, QrCode, Split } from 'lucide-react';
 import { download } from '@/request';
 import { isLogin } from '@/utils';
 import { PdfCombinerCard } from '@/components/tools/PdfCombinerCard';
+import { getQueryParam } from '@/lib/utils';
 
 const Index = () => {
   const { t, i18n } = useTranslation();
@@ -29,6 +30,13 @@ const Index = () => {
       behavior: 'smooth',
     });
   };
+
+  useEffect(() => {
+    const toolParam = getQueryParam('tool');
+    if (toolParam === 'pdfCombiner') {
+      setActiveTab('tools');
+    }
+  }, []);
 
   return (
     <div className="min-h-screen">
