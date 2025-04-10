@@ -255,10 +255,19 @@ const Index = () => {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-            <p>
+            <p className="flex items-center w-full justify-center gap-2">
               &copy; 2025 {t('companyName')}. {t('rights')}{' '}
               <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                 京ICP备2024062306号-2
+              </a>
+              <a
+                href="https://beian.mps.gov.cn/#/query/webSearch?code=11010502056791"
+                rel="noreferrer"
+                target="_blank"
+                className="flex items-center hover:text-white transition-colors"
+              >
+                <img src="/beian.png" className="inline-block" style={{ width: 14, height: 16, marginRight: 4 }} />
+                京公网安备11010502056791号
               </a>
             </p>
           </div>
