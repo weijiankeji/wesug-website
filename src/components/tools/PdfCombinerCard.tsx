@@ -6,7 +6,8 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import { Combine, Upload as IconUpload, X } from 'lucide-react';
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '@/components/ui/context-menu';
-import { generatePdf } from '@/lib/pdf-utils';
+import { generatePdf, WidthMode } from '@/lib/pdf-utils';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ZoomIn, ZoomOut, RotateCw, Check } from 'lucide-react';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -38,6 +39,7 @@ export const PdfCombinerCard = ({ onClick }: PdfCombinerCardProps) => {
   const [combinedPages, setCombinedPages] = useState<PageRef[]>([]);
   const [scale, setScale] = useState<number>(1.0);
   const [pageRotations, setPageRotations] = useState<Record<string, number>>({});
+  const [widthMode, setWidthMode] = useState<WidthMode>('min');
 
   const isUploaded = pdfFiles.length > 0;
   const totalPages = pdfFiles.reduce((sum, f) => sum + f.numPages, 0);
@@ -118,6 +120,7 @@ export const PdfCombinerCard = ({ onClick }: PdfCombinerCardProps) => {
           rotation: pageRotations[pageKey(ref)] || 0,
         })),
         filename: 'pdfcombiner.pdf',
+        widthMode,
       });
       setCombinedPages([]);
     } catch (error) {
@@ -289,11 +292,22 @@ export const PdfCombinerCard = ({ onClick }: PdfCombinerCardProps) => {
 
             {/* 操作按钮 */}
             <div className="flex justify-between space-x-4">
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 items-center">
                 <Button variant="outline" onClick={toggleSelectAll} disabled={isLoading}>
                   <Check className="w-4 h-4 mr-2" />
                   {combinedPages.length === totalPages && totalPages > 0 ? t('pdfCombiner.deselectAll') : t('pdfCombiner.selectAll')}
                 </Button>
+                <Select value={widthMode} onValueChange={(v) => setWidthMode(v as WidthMode)}>
+                  <SelectTrigger className="w-[160px]" aria-label={t('pdfCombiner.widthMode.label')}>
+                    <SelectValue placeholder={t('pdfCombiner.widthMode.label')} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="min">{t('pdfCombiner.widthMode.min')}</SelectItem>
+                    <SelectItem value="max">{t('pdfCombiner.widthMode.max')}</SelectItem>
+                    <SelectItem value="average">{t('pdfCombiner.widthMode.average')}</SelectItem>
+                    <SelectItem value="original">{t('pdfCombiner.widthMode.original')}</SelectItem>
+                  </SelectContent>
+                </Select>
                 <Button
                   variant="default"
                   className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
